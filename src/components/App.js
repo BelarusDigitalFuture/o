@@ -4,7 +4,7 @@ import './App.css';
 import Menu from '../containers/Menu.js';
 import MainPage from "../containers/MainPage";
 import MyData from "../containers/MyData";
-import Vote from "../containers/Vote";
+import Polls from "./Polls";
 import Events from "../containers/Events";
 import Discussions from "../containers/Discussions";
 
@@ -13,7 +13,7 @@ class App extends React.Component {
     menuElements: [
       {name: "Главная", link: "#", render: MainPage},
       {name: "Мои данные  ", link: "#", render: MyData},
-      {name: "Голосования", link: "#", render: Vote},
+      {name: "Голосования", link: "#", render: Polls},
       {name: "Встречи", link: "#", render: Events},
       {
         name: "Обсуждения", link: "#", render: Discussions,
