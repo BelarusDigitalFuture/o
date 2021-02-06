@@ -3,7 +3,62 @@ import React from "react";
 const MyData = (props) => {
   return (
     <div className="section pb-5">
-      <h3>Here is my data</h3>
+      <article className="media">
+        <figure className="media-left">
+          <p className="image is-64x64">
+            <img src="/userpic.jpeg"/>
+          </p>
+        </figure>
+        <div className="media-content">
+          <div className="content">
+            <p>
+              <strong>Юзер Юзерович</strong> <small>Председатель правления ТС</small>
+            </p>
+          </div>
+        </div>
+      </article>
+      <hr/>
+      <div className="box">
+        <div className="heading">Общая информация</div>
+        <hr/>
+        <div className="field">
+          <label className="label">Имя</label>
+          <div className="control">
+            <input className="input" type="text" value="Юзер Юзерович"/>
+          </div>
+        </div>
+        <div className="field">
+          <label className="label">Email</label>
+          <div className="control">
+            <input className="input" type="text" value="user@pobach.by"/>
+          </div>
+        </div>
+        <div className="field">
+          <label className="label">Телефон</label>
+          <div className="control">
+            <input className="input" type="text" value="+375 (44) 1234567"/>
+          </div>
+        </div>
+      </div>
+      <div className="box">
+        <div className="heading">Настройки видимости</div>
+        <hr/>
+        <div className="field">
+          <label className="checkbox">
+            <input type="checkbox"/>
+            Показывать e-mail
+          </label>
+        </div>
+        <div className="field">
+          <label className="checkbox">
+            <input type="checkbox"/>
+            Показывать номер телефона
+          </label>
+        </div>
+      </div>
+      <div className="container">
+        <button className="button is-success">Сохранить изменения</button>
+      </div>
     </div>
   );
 }
