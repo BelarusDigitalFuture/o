@@ -46,13 +46,13 @@ const MyData = (props) => {
         <div className="field">
           <label className="checkbox">
             <input type="checkbox"/>
-            Показывать e-mail
+            &nbsp;Показывать e-mail
           </label>
         </div>
         <div className="field">
           <label className="checkbox">
             <input type="checkbox"/>
-            Показывать номер телефона
+            &nbsp;Показывать номер телефона
           </label>
         </div>
       </div>
