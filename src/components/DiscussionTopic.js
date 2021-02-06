@@ -44,7 +44,7 @@ class DiscussionTopic extends React.Component {
           <div className="card-content">
             <div className="content">
               {this.state.expanded ? parse(this.props.text) : parse(this.props.text.substr(0, 280))}
-              {this.state.expanded ? <></> : <a href="#" onClick={this.onReadMoreClickHandler}>Read more</a>}
+              {this.state.expanded ? <></> : <a href="#!" onClick={this.onReadMoreClickHandler}>Read more</a>}
             </div>
           </div>
           <footer className="card-footer">
