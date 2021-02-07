@@ -1,19 +1,10 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const MenuItem = (props) => {
-  // let children;
-  // if (props.children) {
-  //     children = props.children.map(x =>
-  //         <MenuItem key={x.name} link={x.link} name={x.name}></MenuItem>
-  //     )
-  // }
-
   return (
     <li>
-      <a href={props.link} className={props.isActive ? "is-active" : ""} onClick={props.onClick}>
-        {props.name}
-      </a>
-      {/*{children ? <ul>{children}</ul> : <></>}*/}
+      <Link className={props.isActive ? "is-active" : ""} to={props.url} onClick={props.onClick}>{props.name}</Link>
     </li>
   );
 }

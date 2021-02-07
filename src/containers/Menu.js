@@ -12,6 +12,7 @@ const Menu = props => {
             key={x.name}
             name={x.name}
             link={x.link}
+            url={x.url}
             // children={x.children}
             onClick={() => props.onElementClick(i)}
           />

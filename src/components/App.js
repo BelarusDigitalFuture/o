@@ -8,20 +8,16 @@ import Polls from "./Polls";
 import Events from "../containers/Events";
 import Discussions from "../containers/Discussions";
 
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+
 class App extends React.Component {
   state = {
     menuElements: [
-      {name: "Главная", link: "#", render: MainPage},
-      {name: "Мои данные  ", link: "#", render: MyData},
-      {name: "Голосования", link: "#", render: Polls},
-      {name: "Встречи", link: "#", render: Events},
-      {
-        name: "Обсуждения", link: "#", render: Discussions,
-        // children: [
-        //     {name: "Куплю-продам", link: "#", render: Market},
-        //     {name: "Стол находок", link: "#", render: LostAndFound}
-        // ]
-      },
+      {name: "Главная", link: "#", render: MainPage, url: "/"},
+      {name: "Мои данные", link: "#", render: MyData, url: "/mydata"},
+      {name: "Голосования", link: "#", render: Polls, url: "/polls"},
+      {name: "Встречи", link: "#", render: Events, url: "/events"},
+      {name: "Обсуждения", link: "#", render: Discussions, url: "/discussions"},
     ],
     activeMenuElementId: 0,
   };
@@ -30,27 +26,41 @@ class App extends React.Component {
     this.setState({activeMenuElementId: id});
   };
 
-  renderActivePage() {
-    const Component = this.state.menuElements[this.state.activeMenuElementId].render;
-    return <Component/>;
-  }
-
   render() {
     return (
-      <div>
-        <section className=" columns is-fullheight">
-          <Menu
-            elements={this.state.menuElements}
-            activeElementId={this.state.activeMenuElementId}
-            onElementClick={this.menuElementClickHandler}
-          />
+      <Router>
+        <div>
+          <section className=" columns is-fullheight">
+            <Menu
+              elements={this.state.menuElements}
+              activeElementId={this.state.activeMenuElementId}
+              onElementClick={this.menuElementClickHandler}
+            />
 
-          <div className="container column is-10">
-            {this.renderActivePage()}
-          </div>
+            <div className="container column is-10">
+              <Switch>
+                <Route path="/mydata">
+                  <MyData />
+                </Route>
+                <Route path="/polls">
+                  <Polls />
+                </Route>
+                <Route path="/events">
+                  <Events />
+                </Route>
+                <Route path="/discussions">
+                  <Discussions />
+                </Route>
+                <Route path="/">
+                  <MainPage />
+                </Route>
+              </Switch>
+            </div>
 
-        </section>
-      </div>)
+          </section>
+        </div>
+      </Router>
+    )
   }
 }
 

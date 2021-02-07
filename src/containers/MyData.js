@@ -24,19 +24,19 @@ const MyData = (props) => {
         <div className="field">
           <label className="label">Имя</label>
           <div className="control">
-            <input className="input" type="text" value="Юзер Юзерович"/>
+            <input className="input" type="text" defaultValue="Юзер Юзерович"/>
           </div>
         </div>
         <div className="field">
           <label className="label">Email</label>
           <div className="control">
-            <input className="input" type="text" value="user@pobach.by"/>
+            <input className="input" type="text" defaultValue="user@pobach.by"/>
           </div>
         </div>
         <div className="field">
           <label className="label">Телефон</label>
           <div className="control">
-            <input className="input" type="text" value="+375 (44) 1234567"/>
+            <input className="input" type="text" defaultValue="+375 (44) 1234567"/>
           </div>
         </div>
       </div>

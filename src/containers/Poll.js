@@ -9,7 +9,6 @@ const Poll = (props) => {
     if (props.isAccepted) {color = "has-background-primary-light"}
     else {color = "has-background-danger-light"}
   }
-  console.log(props, color)
 
   return (<>
     <div className="tile is-parent is-vertical">
