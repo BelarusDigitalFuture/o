@@ -1,12 +1,12 @@
 // import logo from './logo.svg';
 import React from 'react';
 import './App.css';
-import Menu from '../containers/Menu.js';
-import MainPage from '../containers/MainPage';
-import MyData from '../containers/MyData';
+import Menu from '../components/Menu.js';
+import MainPage from '../components/MainPage';
+import MyData from '../components/MyData';
 import Polls from './Polls';
-import Events from '../containers/Events';
-import Discussions from '../containers/Discussions';
+import Events from '../components/Events';
+import Discussions from '../components/Discussions';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 

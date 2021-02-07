@@ -1,6 +1,6 @@
 import React from 'react';
 import parse from 'html-react-parser';
-import DiscussionTopicComment from '../containers/DiscussionTopicComment';
+import DiscussionTopicComment from '../components/DiscussionTopicComment';
 
 class DiscussionTopic extends React.Component {
   state = {
