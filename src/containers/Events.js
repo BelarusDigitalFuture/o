@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Events = (props) => {
   return (
@@ -6,6 +6,6 @@ const Events = (props) => {
       <h3>Here is an events page</h3>
     </div>
   );
-}
+};
 
 export default Events;

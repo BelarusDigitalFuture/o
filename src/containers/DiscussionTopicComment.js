@@ -3,7 +3,7 @@ import React from 'react';
 const DiscussionTopicComment = (props) => {
   return (
     <>
-      <hr/>
+      <hr />
       <div className="card">
         <div className="card-content">
           <div className="media">
