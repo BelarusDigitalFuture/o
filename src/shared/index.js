@@ -1,3 +1,3 @@
-import { Form, TextInput } from './form';
+import { AppForm } from './form';
 
-export { Form, TextInput };
+export { AppForm };

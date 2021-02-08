@@ -1,13 +1,20 @@
 import React from 'react';
-import { Formik, Form, useField } from 'formik';
+import { Formik, Form } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
-const AppForm = ({ initial, validation, onSubmit, children }) => {
+const AppForm = ({ initial, validationSchema, onSubmit, children }) => {
   return (
     <>
-      <Formik initialValues={{ initial }} validationSchema={{ validation }} onSubmit={{ onSubmit }}>
+      <Formik initialValues={initial} validationSchema={validationSchema} onSubmit={onSubmit}>
         <Form>
           {children}
-          <button type="submit">Submit</button>
+          <button className="button is-success" type="submit">
+            <span className="icon is-small">
+              <FontAwesomeIcon className="aria-hidden" icon={faCheck} />
+            </span>
+            <span>Save</span>
+          </button>
         </Form>
       </Formik>
     </>

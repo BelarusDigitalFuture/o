@@ -1,4 +1,5 @@
-import Form from './Form';
+import AppForm from './Form';
 import TextInput from './Input/Input';
+import SelectField from './Select/Select';
 
-export { Form, TextInput };
+export { AppForm, TextInput, SelectField };
