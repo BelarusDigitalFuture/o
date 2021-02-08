@@ -1,5 +1,5 @@
 import React from 'react';
-import DiscussionTopic from '../containers/DiscussionTopic';
+import DiscussionTopic from '../../containers/DiscussionTopic';
 
 const DUMMY_TOPICS = [
   {
