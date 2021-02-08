@@ -11,8 +11,7 @@ const TAGS = [
   { value: 'спорт', label: 'спорт' },
 ];
 
-const CardsListFilter = (props) => {
-  // const [selectedDate, setSelectedDate] = useState('');
+const CardsListFilter = ({onFilterHeaderChange, onTagsChange, datesHighlighted, onFilterDateChange, dateSelected}) => {
   const customInput = <input className="input" type="search" />;
 
   return (
@@ -23,23 +22,23 @@ const CardsListFilter = (props) => {
             type="search"
             className="input"
             placeholder="Тема"
-            onChange={props.onFilterHeaderChange}
+            onChange={onFilterHeaderChange}
           />
         </div>
         <div className="column">
           <DatePicker
             wrapperClassName={'datePickerWrapper'}
             customInput={customInput}
-            selected={props.dateSelected}
-            onChange={props.onFilterDateChange}
+            selected={dateSelected}
+            onChange={onFilterDateChange}
             placeholderText="Дата"
-            highlightDates={props.datesHighlighted}
+            highlightDates={datesHighlighted}
           />
         </div>
       </div>
       <div className="columns">
         <div className="column ">
-          <Select options={TAGS} isMulti placeholder="Теги" onChange={props.onTagsChange} />
+          <Select options={TAGS} isMulti placeholder="Теги" onChange={onTagsChange}/>
         </div>
       </div>
     </div>
