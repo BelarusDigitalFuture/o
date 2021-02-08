@@ -7,6 +7,7 @@ import MyData from '../components/MyData';
 import Polls from './Polls';
 import Events from '../components/Events';
 import Discussions from '../components/Discussions';
+import CardsList from './CardsList/CardsList';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 

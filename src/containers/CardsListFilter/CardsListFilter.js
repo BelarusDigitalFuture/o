@@ -1,20 +1,48 @@
 import React, { useState } from 'react';
+import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './CardsListFilter.css';
+
+const TAGS = [
+  { value: 'прогулка', label: 'прогулка' },
+  { value: 'официальная', label: 'официальная' },
+  { value: 'дети', label: 'дети' },
+  { value: 'спорт', label: 'спорт' },
+];
 
 const CardsListFilter = (props) => {
+  // const [selectedDate, setSelectedDate] = useState('');
+  const customInput = <input className="input" type="search" />;
+
   return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
-      <div className="navbar-item field">
-        <input
-          type="search"
-          className="input"
-          placeholder="Поиск..."
-          onChange={props.onFilterChange}
-        />
-        {/*<span className="icon is-small is-right">*/}
-        {/*  <icon />*/}
-        {/*</span>*/}
+    <div className="box">
+      <div className="columns">
+        <div className="column is-three-quarters">
+          <input
+            type="search"
+            className="input"
+            placeholder="Тема"
+            onChange={props.onFilterHeaderChange}
+          />
+        </div>
+        <div className="column">
+          <DatePicker
+            wrapperClassName={'datePickerWrapper'}
+            customInput={customInput}
+            selected={props.dateSelected}
+            onChange={props.onFilterDateChange}
+            placeholderText="Дата"
+            highlightDates={props.datesHighlighted}
+          />
+        </div>
       </div>
-    </nav>
+      <div className="columns">
+        <div className="column ">
+          <Select options={TAGS} isMulti placeholder="Теги" onChange={props.onTagsChange} />
+        </div>
+      </div>
+    </div>
   );
 };
 
