@@ -39,7 +39,7 @@ const CardsList = ({ data }) => {
             </ul>
 
             <div className="is-right">
-              <li className={showOpen ? '' : 'is-active'}>
+              <li className={isFilterShowed ? 'is-active' : ''}>
                 <a
                   style={{ display: 'inline-block' }}
                   onClick={() => setIsFilterShowed(!isFilterShowed)}
