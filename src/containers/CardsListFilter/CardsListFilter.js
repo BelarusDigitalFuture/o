@@ -11,7 +11,13 @@ const TAGS = [
   { value: 'спорт', label: 'спорт' },
 ];
 
-const CardsListFilter = ({onFilterHeaderChange, onTagsChange, datesHighlighted, onFilterDateChange, dateSelected}) => {
+const CardsListFilter = ({
+  onFilterHeaderChange,
+  onTagsChange,
+  datesHighlighted,
+  onFilterDateChange,
+  dateSelected,
+}) => {
   const customInput = <input className="input" type="search" />;
 
   return (
@@ -38,7 +44,7 @@ const CardsListFilter = ({onFilterHeaderChange, onTagsChange, datesHighlighted, 
       </div>
       <div className="columns">
         <div className="column ">
-          <Select options={TAGS} isMulti placeholder="Теги" onChange={onTagsChange}/>
+          <Select options={TAGS} isMulti placeholder="Теги" onChange={onTagsChange} />
         </div>
       </div>
     </div>

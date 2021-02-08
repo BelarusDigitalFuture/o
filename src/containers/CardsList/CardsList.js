@@ -33,7 +33,7 @@ const CLOSED_CARDS = [
 
 const CardsList = (props) => {
   const [showOpen, setShowOpen] = useState(true);
-  const [isFilterShowed, setIsFilterShowed] = useState(true);
+  const [isFilterShowed, setIsFilterShowed] = useState(false);
   const [filterHeaderString, setFilterHeaderString] = useState('');
   const [filterDate, setFilterDate] = useState('');
   const [filterTags, setFilterTags] = useState([]);
