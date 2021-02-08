@@ -15,7 +15,7 @@ const CardsList = ({ data }) => {
     cardsSet.filter(
       (x) =>
         x.header.toLowerCase().includes(filterHeaderString.toLowerCase()) &&
-        filterTags.every((el) => x.tags.includes(el.value)) &&
+        filterTags.every((el) => x.tags.includes(el)) &&
         (filterDate ? filterDate.getTime() === x.date.getTime() : true),
     );
 
@@ -23,7 +23,6 @@ const CardsList = ({ data }) => {
     ? data.filter((x) => x.date.getTime() >= new Date().getTime())
     : data.filter((x) => x.date.getTime() < new Date().getTime());
   const tagList = cardsSet.map((x) => x.tags).flat();
-  console.log(cardsSet);
 
   return (
     <>
@@ -63,7 +62,7 @@ const CardsList = ({ data }) => {
               datesHighlighted={cardsSet.map((x) => x.date)}
               tags={tagList}
               onTagsChange={(tags) => {
-                setFilterTags(tags);
+                setFilterTags(tags.map((x) => x.value));
               }}
             />
           </div>
