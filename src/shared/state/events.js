@@ -5,6 +5,7 @@ export const EventsContext = createContext();
 const defaultEvents = [
   // TEMPLATE
   // {
+  //   id: '',
   //   header: '',
   //   author: '',
   //   date: new Date(),
@@ -16,6 +17,7 @@ const defaultEvents = [
   //   },
   // },
   {
+    id: 1612891707057,
     header: 'Новый год!',
     author: 'Сергей Есенин',
     date: new Date(2020, 11, 31),
@@ -26,6 +28,7 @@ const defaultEvents = [
     eventData: { peopleGoing: 91 },
   },
   {
+    id: 1612891707990,
     header: 'Собрание жильцов №3',
     author: 'Сергей Есенин',
     date: new Date(2021, 1, 25),
@@ -42,8 +45,9 @@ const reducer = (state, action) => {
       return [
         ...state,
         {
+          id: Date.now(),
           header: action.event.header,
-          author: action.event.author,
+          author: 'admin',
           date: action.event.date,
           text: action.event.text || '',
           address: action.event.address || '',

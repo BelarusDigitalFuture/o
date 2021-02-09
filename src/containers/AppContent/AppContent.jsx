@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Events from '../../components/Events';
-import Discussions from '../../components/Discussions';
 import CardsList from '../CardsList/CardsList';
 import DiscussionForm from '../../components/DiscussionForm';
 import DiscussionPage from '../../components/Pages/DiscussionPage/DiscussionPage';
+import EventForm from '../../components/EventForm';
 import PollForm from '../../components/PollForm/PollForm';
 import MainPage from '../../components/Pages/MainPage';
 import MyData from '../../components/MyData';
@@ -32,6 +31,9 @@ const AppContent = () => {
               </Route>
               <Route path="/polls">
                 <CardsList data={polls} isPolls />
+              </Route>
+              <Route path="/events/new">
+                <EventForm />
               </Route>
               <Route path="/events">
                 <CardsList data={events} isEvents />

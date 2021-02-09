@@ -1,6 +1,5 @@
 import React from 'react';
-import { FieldProps } from 'formik';
-import Select, { Option, ReactSelectProps } from 'react-select';
+import Select from 'react-select';
 
 const SelectField = ({ options, field, form, isMulti, label }) => (
   <div className="field">
@@ -11,7 +10,10 @@ const SelectField = ({ options, field, form, isMulti, label }) => (
       isMulti={isMulti}
       value={options ? options.find((option) => option.value === field.value) : ''}
       onChange={(option) => {
-        return form.setFieldValue(field.name, option.value);
+        return form.setFieldValue(
+          field.name,
+          option.map((x) => x.value),
+        );
       }}
       onBlur={field.onBlur}
     />

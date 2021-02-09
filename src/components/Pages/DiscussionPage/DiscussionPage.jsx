@@ -32,6 +32,7 @@ const DiscussionPage = () => {
       ))}
 
       <AppForm
+        buttonText="Отправить"
         initial={{ comment: '' }}
         validationSchema={Yup.object({
           comment: Yup.string().required('Required'),

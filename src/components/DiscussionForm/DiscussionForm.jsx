@@ -4,6 +4,7 @@ import { Field } from 'formik';
 import * as Yup from 'yup';
 import { AppForm } from '../../shared';
 import { TextInput, SelectField } from '../../shared/form';
+import GenericPage from '../Pages/GenericPage/GenericPage';
 import { TagsContext, TopicsContext } from '../../shared/state';
 
 const DiscussionForm = () => {
@@ -22,15 +23,17 @@ const DiscussionForm = () => {
   });
 
   return (
-    <AppForm
-      initial={{ tagsss: [] }}
-      validationSchema={validationSchema}
-      onSubmit={handleFormSubmit}
-    >
-      <TextInput label={'Header'} name="header" />
-      <TextInput label={'Text'} name="text" />
-      <Field label="Tags" name={'tags'} isMulti component={SelectField} options={options} />
-    </AppForm>
+    <GenericPage header="Новое обсуждение">
+      <AppForm
+        initial={{ tags: [], header: '', text: '' }}
+        validationSchema={validationSchema}
+        onSubmit={handleFormSubmit}
+      >
+        <TextInput label={'Заголовок'} name="header" />
+        <TextInput label={'Текст'} name="text" />
+        <Field label="Теги" name="tags" isMulti component={SelectField} options={options} />
+      </AppForm>
+    </GenericPage>
   );
 };
 
