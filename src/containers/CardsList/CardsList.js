@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useRouteMatch, Switch } from 'react-router-dom';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,9 +25,9 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
     cardsSet = showOpen
       ? data.filter((x) => x.date.getTime() >= new Date().getTime())
       : data.filter((x) => x.date.getTime() < new Date().getTime());
-    cardsSet = cardsSet.sort((x, y) => x.date.getDate() - y.date.getDate());
+    cardsSet = cardsSet.sort((x, y) => x.date.getTime() - y.date.getTime());
   } else {
-    cardsSet = data.sort((x, y) => y.date.getDate() - x.date.getDate());
+    cardsSet = data.sort((x, y) => y.date.getTime() - x.date.getTime());
   }
   const tagList = cardsSet.map((x) => x.tags).flat();
 
