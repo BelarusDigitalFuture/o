@@ -16,6 +16,8 @@ const defaultPolls = [
       results: [52, 11],
       discussionId: 1,
     },
+    id: 0,
+    isOpen: true,
   },
   {
     header: 'Ремонт детской площадки',
@@ -31,6 +33,8 @@ const defaultPolls = [
       results: [11, 32, 53],
       discussionId: 1,
     },
+    id: 1,
+    isOpen: true,
   },
   {
     header: 'Празднуем новый год вместе',
@@ -46,6 +50,9 @@ const defaultPolls = [
       results: [14, 52, 3],
       discussionId: 1,
     },
+    id: 2,
+    isOpen: false,
+    isSuccess: false,
   },
   {
     header: 'А не поменять ли мне жену?',
@@ -58,8 +65,11 @@ const defaultPolls = [
       question: 'Кого выбрать?',
       items: ['Людку из третьего', 'Соседа Игоря', 'Зинку с пятого'],
       results: [1, 3, 12],
-      discussionId: 2,
+      discussionId: 1,
     },
+    id: 3,
+    isOpen: false,
+    isSuccess: true,
   },
 ];
 

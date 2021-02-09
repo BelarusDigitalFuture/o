@@ -26,6 +26,7 @@ const defaultEvents = [
     address: 'ул. Буйло, д. 73/2',
     tags: ['праздник', 'семья', 'наш дом'],
     eventData: { peopleGoing: 91 },
+    discussionId: 0,
   },
   {
     id: 1612891707990,
@@ -36,6 +37,7 @@ const defaultEvents = [
     address: 'ул. Буйло, д. 73/2',
     tags: ['официально', 'наш дом'],
     eventData: { peopleGoing: 24 },
+    discussionId: 1,
   },
 ];
 
