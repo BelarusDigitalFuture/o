@@ -32,13 +32,12 @@ const DiscussionPage = () => {
       ))}
 
       <AppForm
-        initial={{}}
+        initial={{ comment: '' }}
         validationSchema={Yup.object({
           comment: Yup.string().required('Required'),
         })}
         onSubmit={(values) => {
           dispatch({ type: 'ADD_COMMENT', comment: { ...values, topicId: topicId } });
-          console.log({ type: 'ADD_COMMENT', comment: { ...values, topicId: topicId } });
         }}
       >
         <TextInput label={'Ваш комментарий'} name="comment" />
