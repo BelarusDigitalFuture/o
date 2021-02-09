@@ -7,7 +7,9 @@ import Comment from '../../../containers/Comment/Comment';
 const DiscussionPage = () => {
   const { topicId } = useParams();
   const { topics } = useContext(TopicsContext);
-  const topic = topics[topicId];
+
+  const topic = topics.find((x) => x.id.toString() === topicId);
+
   if (!topic) {
     return <GenericPage />;
   }

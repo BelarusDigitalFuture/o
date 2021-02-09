@@ -13,6 +13,7 @@ const defaultTopics = [
   //   topicData: { likes: 0, pollId: 0, comments: [{ author: '', date: new Date(), comment: '' }] },
   // },
   {
+    id: 1612881006107,
     header: 'Я узнал что у меня есть огромная семья',
     author: 'Владимир Орлов',
     date: new Date(2021, 1, 3),
@@ -39,6 +40,7 @@ const defaultTopics = [
     },
   },
   {
+    id: 1612881007141,
     header: 'Дом похож на катакомбы',
     author: 'Сталкер Иванов',
     date: new Date(2021, 0, 30),
@@ -65,6 +67,7 @@ const defaultTopics = [
     },
   },
   {
+    id: 1612881007433,
     header: 'Наши новые соседи из третьего подъезда',
     author: 'Евгений Онегин',
     date: new Date(2020, 10, 29),
@@ -103,6 +106,7 @@ const reducer = (state, action) => {
       return [
         ...state,
         {
+          id: Date.now(),
           header: action.topic.header,
           text: action.topic.text || '',
           comments: action.topic.comments || [],

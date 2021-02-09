@@ -84,7 +84,7 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
             />
           </div>
           {applyFilters(cardsSet).map((x, i) => (
-            <Card key={i} {...x} id={i} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
+            <Card key={i} {...x} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
           ))}
         </div>
       </div>
