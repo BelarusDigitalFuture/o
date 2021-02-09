@@ -2,7 +2,7 @@
 import React from 'react';
 import './App.css';
 import Menu from '../../components/Menu';
-import MainPage from '../../components/MainPage';
+import { MainPage } from '../../components/Pages';
 import MyData from '../../components/MyData';
 // import Polls from '../Polls';
 import Events from '../../components/Events';
