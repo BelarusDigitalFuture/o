@@ -6,7 +6,7 @@ import Discussions from '../../components/Discussions';
 import CardsList from '../CardsList/CardsList';
 import DiscussionForm from '../../components/DiscussionForm';
 import PollForm from '../../components/PollForm/PollForm';
-import MainPage from '../../components/MainPage';
+import MainPage from '../../components/Pages/MainPage';
 import MyData from '../../components/MyData';
 import AppMenu from '../Menu/Menu';
 import { PollsContext } from '../../shared/state';
