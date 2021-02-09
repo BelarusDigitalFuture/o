@@ -5,6 +5,7 @@ import Events from '../../components/Events';
 import Discussions from '../../components/Discussions';
 import CardsList from '../CardsList/CardsList';
 import DiscussionForm from '../../components/DiscussionForm';
+import DiscussionPage from '../../components/Pages/DiscussionPage/DiscussionPage';
 import PollForm from '../../components/PollForm/PollForm';
 import MainPage from '../../components/Pages/MainPage';
 import MyData from '../../components/MyData';
@@ -38,9 +39,13 @@ const AppContent = () => {
               <Route path="/discussions/new">
                 <DiscussionForm />
               </Route>
+              <Route path="/discussions/:topicId">
+                <DiscussionPage />
+              </Route>
               <Route path="/discussions">
                 <CardsList data={topics} isTopics />
               </Route>
+
               <Route path="/">
                 <MainPage />
               </Route>
