@@ -14,7 +14,6 @@ const Card = ({
   isNew = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-
   const history = useHistory();
 
   const isOpen = date.getTime() >= new Date().getTime();

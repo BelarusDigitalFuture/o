@@ -9,6 +9,7 @@ import PollForm from '../../components/PollForm/PollForm';
 import MainPage from '../../components/Pages/MainPage';
 import MyData from '../../components/MyData';
 import AppMenu from '../Menu/Menu';
+import PollPage from '../../components/Pages/PollPage';
 import { PollsContext, TopicsContext, EventsContext } from '../../shared/state';
 
 const AppContent = () => {
@@ -20,7 +21,6 @@ const AppContent = () => {
       <div>
         <section className=" columns is-fullheight">
           <AppMenu />
-
           <div className="container column is-10">
             <Switch>
               <Route path="/mydata">
@@ -28,6 +28,9 @@ const AppContent = () => {
               </Route>
               <Route path="/polls/new">
                 <PollForm />
+              </Route>
+              <Route path="/polls/:pollId">
+                <PollPage />
               </Route>
               <Route path="/polls">
                 <CardsList data={polls} isPolls />
