@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './CardsListFilter.css';
 
-const TAGS = [
-  { value: 'прогулка', label: 'прогулка' },
-  { value: 'официальная', label: 'официальная' },
-  { value: 'дети', label: 'дети' },
-  { value: 'спорт', label: 'спорт' },
-];
-
 const CardsListFilter = ({
+  tags,
   onFilterHeaderChange,
   onTagsChange,
   datesHighlighted,
@@ -44,7 +38,12 @@ const CardsListFilter = ({
       </div>
       <div className="columns">
         <div className="column ">
-          <Select options={TAGS} isMulti placeholder="Теги" onChange={onTagsChange} />
+          <Select
+            options={tags.map((x) => ({ label: `#${x}`, value: x }))}
+            isMulti
+            placeholder="Теги"
+            onChange={onTagsChange}
+          />
         </div>
       </div>
     </div>

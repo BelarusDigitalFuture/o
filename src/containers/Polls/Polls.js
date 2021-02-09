@@ -1,5 +1,5 @@
 import React from 'react';
-import Poll from '../../components/Poll';
+import Poll from '../Poll';
 
 const OPEN_POLLS = [
   { header: 'Ремонт детской площадки', open: true },

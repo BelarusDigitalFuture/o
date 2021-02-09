@@ -1,37 +1,10 @@
 import React, { useState } from 'react';
-import CardsListFilter from '../CardsListFilter/CardsListFilter';
+import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import Poll from '../../components/Poll';
+import Poll from '../Poll';
 
-const OPEN_CARDS = [
-  {
-    header: 'Собрание жильцов №3',
-    open: true,
-    date: new Date('2021-02-14'),
-    tags: ['официальная'],
-  },
-  { header: 'Лепим снеговика!', open: true, date: new Date('2021-02-11'), tags: ['дети', 'спорт'] },
-];
-
-const CLOSED_CARDS = [
-  {
-    header: 'Катаемся на велосипедах',
-    open: false,
-    isAccepted: false,
-    date: new Date('2021-01-11'),
-    tags: ['спорт', 'прогулка'],
-  },
-  {
-    header: 'Выгул детей',
-    open: false,
-    isAccepted: true,
-    date: new Date('2021-01-22'),
-    tags: ['дети'],
-  },
-];
-
-const CardsList = (props) => {
+const CardsList = ({ data }) => {
   const [showOpen, setShowOpen] = useState(true);
   const [isFilterShowed, setIsFilterShowed] = useState(false);
   const [filterHeaderString, setFilterHeaderString] = useState('');
@@ -42,11 +15,14 @@ const CardsList = (props) => {
     cardsSet.filter(
       (x) =>
         x.header.toLowerCase().includes(filterHeaderString.toLowerCase()) &&
-        filterTags.every((el) => x.tags.includes(el.value)) &&
-        (filterDate ? filterDate.getDate() === x.date.getDate() : true),
+        filterTags.every((el) => x.tags.includes(el)) &&
+        (filterDate ? filterDate.getTime() === x.date.getTime() : true),
     );
 
-  const setOfCards = showOpen ? OPEN_CARDS : CLOSED_CARDS;
+  const cardsSet = showOpen
+    ? data.filter((x) => x.date.getTime() >= new Date().getTime())
+    : data.filter((x) => x.date.getTime() < new Date().getTime());
+  const tagList = cardsSet.map((x) => x.tags).flat();
 
   return (
     <>
@@ -63,7 +39,7 @@ const CardsList = (props) => {
             </ul>
 
             <div className="is-right">
-              <li className={showOpen ? '' : 'is-active'}>
+              <li className={isFilterShowed ? 'is-active' : ''}>
                 <a
                   style={{ display: 'inline-block' }}
                   onClick={() => setIsFilterShowed(!isFilterShowed)}
@@ -83,14 +59,15 @@ const CardsList = (props) => {
                 setFilterDate(date);
               }}
               dateSelected={filterDate}
-              datesHighlighted={setOfCards.map((x) => x.date)}
+              datesHighlighted={cardsSet.map((x) => x.date)}
+              tags={tagList}
               onTagsChange={(tags) => {
-                setFilterTags(tags);
+                setFilterTags(tags.map((x) => x.value));
               }}
             />
           </div>
 
-          {applyFilters(setOfCards).map((x, i) => (
+          {applyFilters(cardsSet).map((x, i) => (
             <Poll key={i} {...x} />
           ))}
         </div>
