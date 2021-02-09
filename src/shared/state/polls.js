@@ -10,7 +10,12 @@ const defaultPolls = [
     text: 'Господа, унитазы в наших домах уже поизносились, нужны бы новые. Голосуем!',
     isRadio: true,
     tags: ['официально', 'ремонт'],
-    pollData: { question: 'Хотите новый унитаз?', items: ['Да', 'Нет'], result: 52 },
+    pollData: {
+      question: 'Хотите новый унитаз?',
+      items: ['Да', 'Нет'],
+      results: [52, 11],
+      discussionId: 1,
+    },
   },
   {
     header: 'Ремонт детской площадки',
@@ -23,7 +28,8 @@ const defaultPolls = [
     pollData: {
       question: 'Что устанавливаем?',
       items: ['Пилон', 'Бар', 'Новые качели'],
-      result: 80,
+      results: [11, 32, 53],
+      discussionId: 1,
     },
   },
   {
@@ -34,7 +40,12 @@ const defaultPolls = [
       'Давайте отметим новый год у нас во дворе! Я почитаю стихи, а Алоиза опять сломает качели',
     isRadio: true,
     tags: ['неофициально', 'праздник', 'дети'],
-    pollData: { question: 'Придете?', items: ['Да, один', 'Да, с семьей', 'Нет'], result: 72 },
+    pollData: {
+      question: 'Придете?',
+      items: ['Да, один', 'Да, с семьей', 'Нет'],
+      results: [14, 42, 3],
+      discussionId: 1,
+    },
   },
   {
     header: 'А не поменять ли мне жену?',
@@ -46,7 +57,8 @@ const defaultPolls = [
     pollData: {
       question: 'Кого выбрать?',
       items: ['Людку из третьего', 'Соседа Игоря', 'Зинку с пятого'],
-      result: 14,
+      results: [1, 3, 12],
+      discussionId: 2,
     },
   },
 ];
