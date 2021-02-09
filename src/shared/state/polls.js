@@ -43,7 +43,7 @@ const defaultPolls = [
     pollData: {
       question: 'Придете?',
       items: ['Да, один', 'Да, с семьей', 'Нет'],
-      results: [14, 42, 3],
+      results: [14, 52, 3],
       discussionId: 1,
     },
   },
