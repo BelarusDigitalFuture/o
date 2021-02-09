@@ -3,9 +3,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import Poll from '../Poll';
+import Card from '../Card';
 
-const CardsList = ({ data }) => {
+const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }) => {
   const [showOpen, setShowOpen] = useState(true);
   const [isFilterShowed, setIsFilterShowed] = useState(false);
   const [filterHeaderString, setFilterHeaderString] = useState('');
@@ -20,9 +20,15 @@ const CardsList = ({ data }) => {
         (filterDate ? filterDate.getTime() === x.date.getTime() : true),
     );
 
-  const cardsSet = showOpen
-    ? data.filter((x) => x.date.getTime() >= new Date().getTime())
-    : data.filter((x) => x.date.getTime() < new Date().getTime());
+  let cardsSet;
+  if (isPolls || isEvents) {
+    cardsSet = showOpen
+      ? data.filter((x) => x.date.getTime() >= new Date().getTime())
+      : data.filter((x) => x.date.getTime() < new Date().getTime());
+    cardsSet = cardsSet.sort((x, y) => x.date.getDate() - y.date.getDate());
+  } else {
+    cardsSet = data.sort((x, y) => y.date.getDate() - x.date.getDate());
+  }
   const tagList = cardsSet.map((x) => x.tags).flat();
 
   const history = useHistory();
@@ -35,29 +41,33 @@ const CardsList = ({ data }) => {
       </button>
       <div className="section pb-5">
         <div className="box">
-          <div className="tabs mb-2">
-            <ul>
-              <li className={showOpen ? 'is-active' : ''}>
-                <a onClick={() => setShowOpen(true)}>Открытые</a>
-              </li>
-              <li className={showOpen ? '' : 'is-active'}>
-                <a onClick={() => setShowOpen(false)}>Завершенные</a>
-              </li>
-            </ul>
+          {isEvents || isPolls ? (
+            <div className="tabs mb-2">
+              <ul>
+                <li className={showOpen ? 'is-active' : ''}>
+                  <a onClick={() => setShowOpen(true)}>{isPolls ? 'Открытые' : 'Грядущие'}</a>
+                </li>
+                <li className={showOpen ? '' : 'is-active'}>
+                  <a onClick={() => setShowOpen(false)}>Завершенные</a>
+                </li>
+              </ul>
 
-            <div className="is-right">
-              <li className={isFilterShowed ? 'is-active' : ''}>
-                <a
-                  style={{ display: 'inline-block' }}
-                  onClick={() => setIsFilterShowed(!isFilterShowed)}
-                >
-                  <span className="icon is-small">
-                    <FontAwesomeIcon className="aria-hidden" icon={faSearch} />
-                  </span>
-                </a>
-              </li>
+              <div className="is-right">
+                <li className={isFilterShowed ? 'is-active' : ''}>
+                  <a
+                    style={{ display: 'inline-block' }}
+                    onClick={() => setIsFilterShowed(!isFilterShowed)}
+                  >
+                    <span className="icon is-small">
+                      <FontAwesomeIcon className="aria-hidden" icon={faSearch} />
+                    </span>
+                  </a>
+                </li>
+              </div>
             </div>
-          </div>
+          ) : (
+            ''
+          )}
 
           <div className={isFilterShowed ? '' : 'is-hidden'}>
             <CardsListFilter
@@ -75,7 +85,7 @@ const CardsList = ({ data }) => {
           </div>
 
           {applyFilters(cardsSet).map((x, i) => (
-            <Poll key={i} {...x} />
+            <Card key={i} {...x} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
           ))}
         </div>
       </div>

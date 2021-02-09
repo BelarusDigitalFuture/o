@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { TagsProvider, TopicsProvider, PollsProvider } from '../../shared/state';
+import { TagsProvider, TopicsProvider, PollsProvider, EventsProvider } from '../../shared/state';
 import AppContent from '../AppContent/AppContent';
 
 class App extends React.Component {
@@ -24,7 +24,9 @@ class App extends React.Component {
       <TagsProvider>
         <TopicsProvider>
           <PollsProvider>
-            <AppContent />
+            <EventsProvider>
+              <AppContent />
+            </EventsProvider>
           </PollsProvider>
         </TopicsProvider>
       </TagsProvider>
