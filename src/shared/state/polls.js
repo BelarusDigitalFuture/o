@@ -58,8 +58,16 @@ const reducer = (state, action) => {
         ...state,
         {
           header: action.poll.header,
+          text: action.poll.text,
+          isRadio: !action.poll.multichoice || true,
           open: action.poll.open || true,
           isAccepted: action.poll.isAccepted || false,
+          date: new Date(),
+          author: 'user',
+          pollData: {
+            question: action.poll.question,
+            items: [],
+          },
         },
       ];
     default:

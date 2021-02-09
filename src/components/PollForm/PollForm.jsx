@@ -18,6 +18,8 @@ const PollForm = () => {
 
   const validationSchema = Yup.object({
     header: Yup.string().max(50, 'Must be 50 characters or less').required('Required'),
+    text: Yup.string().required('Required'),
+    question: Yup.string().required('Required'),
   });
 
   return (
@@ -27,8 +29,10 @@ const PollForm = () => {
       onSubmit={handleFormSubmit}
     >
       <TextInput label={'Header'} name="header" />
+      <TextInput label={'Text'} name="text" />
       <Field label="Tags" name={'tags'} isMulti component={SelectField} options={options} />
       <CheckboxField name="multichoice">Multi</CheckboxField>
+      <TextInput label={'Question'} name="question" />
     </AppForm>
   );
 };
