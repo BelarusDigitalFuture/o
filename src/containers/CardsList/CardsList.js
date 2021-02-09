@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouteMatch, Switch } from 'react-router-dom';
 import { useLocation, useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -83,9 +84,8 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
               }}
             />
           </div>
-
           {applyFilters(cardsSet).map((x, i) => (
-            <Card key={i} {...x} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
+            <Card key={i} {...x} id={i} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
           ))}
         </div>
       </div>

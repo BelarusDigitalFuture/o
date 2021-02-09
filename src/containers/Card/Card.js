@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Card = ({
+  id,
   header,
   date,
   author,
@@ -11,6 +13,8 @@ const Card = ({
   isPoll = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const history = useHistory();
 
   const isOpen = date.getTime() >= new Date().getTime();
   let color = isHovered ? 'has-background-grey-lighter' : 'has-background-light';
@@ -40,7 +44,7 @@ const Card = ({
   return (
     <div
       className={'card mt-2 ' + color}
-      onClick={() => console.log('mock here')}
+      onClick={() => history.push(`${window.location.pathname}/${id}`)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
