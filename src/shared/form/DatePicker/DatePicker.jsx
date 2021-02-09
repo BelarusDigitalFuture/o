@@ -10,7 +10,6 @@ const DatePickerField = ({ options, field, form, label, customInput }) => (
       selected={(field.value && new Date(field.value)) || null}
       customInput={customInput}
       onChange={(option) => {
-        console.log('DP changed', option);
         return form.setFieldValue(field.name, option);
       }}
       onBlur={field.onBlur}
