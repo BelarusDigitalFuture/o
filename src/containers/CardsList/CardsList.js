@@ -25,8 +25,9 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
     cardsSet = showOpen
       ? data.filter((x) => x.date.getTime() >= new Date().getTime())
       : data.filter((x) => x.date.getTime() < new Date().getTime());
+    cardsSet = cardsSet.sort((x, y) => x.date.getDate() - y.date.getDate());
   } else {
-    cardsSet = data;
+    cardsSet = data.sort((x, y) => y.date.getDate() - x.date.getDate());
   }
   const tagList = cardsSet.map((x) => x.tags).flat();
 
