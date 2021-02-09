@@ -8,6 +8,9 @@ const DiscussionPage = () => {
   const { topicId } = useParams();
   const { topics } = useContext(TopicsContext);
   const topic = topics[topicId];
+  if (!topic) {
+    return <GenericPage />;
+  }
   const comments = topic.topicData.comments.sort((x, y) => x.date.getTime() - y.date.getTime());
 
   return (
