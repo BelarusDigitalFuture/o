@@ -19,6 +19,9 @@ const Card = ({
 
   const isOpen = date.getTime() >= new Date().getTime();
   let color = isHovered ? 'has-background-grey-lighter' : 'has-background-light';
+  if (isNew) {
+    color = isHovered ? 'has-background-primary' : 'has-background-primary-light';
+  }
   if (isPoll) {
     if (isOpen) {
       color = isHovered ? 'has-background-warning' : 'has-background-warning-light';

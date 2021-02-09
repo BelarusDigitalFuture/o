@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import Card from '../Card';
 
 const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }) => {
@@ -76,7 +77,15 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
               }}
             />
           </div>
-          {showOpen ? <Card id="new" header="Создать" isNew /> : ''}
+          {showOpen ? (
+            <Card
+              id="new"
+              header={<FontAwesomeIcon className="aria-hidden" size="2x" icon={faPlusSquare} />}
+              isNew
+            />
+          ) : (
+            ''
+          )}
           {applyFilters(cardsSet).map((x, i) => (
             <Card key={i} {...x} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
           ))}
