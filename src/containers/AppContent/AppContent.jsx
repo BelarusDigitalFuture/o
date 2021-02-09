@@ -9,11 +9,12 @@ import PollForm from '../../components/PollForm/PollForm';
 import MainPage from '../../components/Pages/MainPage';
 import MyData from '../../components/MyData';
 import AppMenu from '../Menu/Menu';
-import { PollsContext, TopicsContext } from '../../shared/state';
+import { PollsContext, TopicsContext, EventsContext } from '../../shared/state';
 
 const AppContent = () => {
   const { polls } = useContext(PollsContext);
   const { topics } = useContext(TopicsContext);
+  const { events } = useContext(EventsContext);
   return (
     <Router>
       <div>
@@ -32,7 +33,7 @@ const AppContent = () => {
                 <CardsList data={polls} isPolls />
               </Route>
               <Route path="/events">
-                <Events />
+                <CardsList data={events} isEvents />
               </Route>
               <Route path="/discussions/new">
                 <DiscussionForm />
