@@ -3,10 +3,14 @@ import { useParams } from 'react-router-dom';
 import GenericPage from '../GenericPage/GenericPage';
 import { TopicsContext } from '../../../shared/state';
 import Comment from '../../../containers/Comment/Comment';
+import TextInput from '../../../shared/form/Input/Input';
+import AppForm from '../../../shared/form/Form';
+import * as Yup from 'yup';
 
 const DiscussionPage = () => {
   const { topicId } = useParams();
   const { topics } = useContext(TopicsContext);
+  const { dispatch } = useContext(TopicsContext);
 
   const topic = topics.find((x) => x.id.toString() === topicId);
 
@@ -26,6 +30,19 @@ const DiscussionPage = () => {
       {comments.map((x, i) => (
         <Comment key={i} {...x} />
       ))}
+
+      <AppForm
+        initial={{}}
+        validationSchema={Yup.object({
+          comment: Yup.string().required('Required'),
+        })}
+        onSubmit={(values) => {
+          dispatch({ type: 'ADD_COMMENT', comment: { ...values, topicId: topicId } });
+          console.log({ type: 'ADD_COMMENT', comment: { ...values, topicId: topicId } });
+        }}
+      >
+        <TextInput label={'Ваш комментарий'} name="comment" />
+      </AppForm>
     </GenericPage>
   );
 };

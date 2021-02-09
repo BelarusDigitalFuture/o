@@ -112,6 +112,17 @@ const reducer = (state, action) => {
           comments: action.topic.comments || [],
         },
       ];
+    case 'ADD_COMMENT': {
+      const topicIndex = state.findIndex((x) => x.id.toString() === action.comment.topicId);
+      const newState = [...state];
+      newState[topicIndex].topicData.comments.push({
+        author: 'admin',
+        date: new Date(),
+        comment: action.comment.comment,
+        likes: 0,
+      });
+      return newState;
+    }
     default:
       return state;
   }
