@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -31,14 +30,8 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
   }
   const tagList = cardsSet.map((x) => x.tags).flat();
 
-  const history = useHistory();
-  const location = useLocation();
-
   return (
     <>
-      <button className="button" onClick={() => history.push(`${location.pathname}/new`)}>
-        Add
-      </button>
       <div className="section pb-5">
         <div className="box">
           {isEvents || isPolls ? (
@@ -83,6 +76,7 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
               }}
             />
           </div>
+          {showOpen ? <Card id="new" header="Создать" isNew /> : ''}
           {applyFilters(cardsSet).map((x, i) => (
             <Card key={i} {...x} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
           ))}

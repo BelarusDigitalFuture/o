@@ -4,13 +4,14 @@ import { useHistory } from 'react-router-dom';
 const Card = ({
   id,
   header,
-  date,
-  author,
-  tags,
+  date = new Date(),
+  author = '',
+  tags = '',
   pollData,
   isTopic = false,
   isEvent = false,
   isPoll = false,
+  isNew = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -52,14 +53,20 @@ const Card = ({
         <div className="media">
           <div className="media-content">
             <p className="title is-4">{header}</p>
-            <p className="subtitle is-7 mb-1">
-              Автор: {author} | {dateText}: {date.toLocaleDateString()}
-            </p>
-            {tags.map((x, i) => (
-              <span key={i} className="tag is-info is-light mr-1">
-                #{x}
-              </span>
-            ))}
+            {isNew ? (
+              ''
+            ) : (
+              <p className="subtitle is-7 mb-1">
+                Автор: {author} | {dateText}: {date.toLocaleDateString()}
+              </p>
+            )}
+            {isNew
+              ? ''
+              : tags.map((x, i) => (
+                  <span key={i} className="tag is-info is-light mr-1">
+                    #{x}
+                  </span>
+                ))}
           </div>
         </div>
       </div>
