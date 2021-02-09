@@ -5,6 +5,7 @@ export const TopicsContext = createContext();
 const defaultTopics = [
   // TEMPLATE
   // {
+  //   id: Date.now(),
   //   header: '',
   //   author: '',
   //   date: new Date(),
@@ -107,9 +108,12 @@ const reducer = (state, action) => {
         ...state,
         {
           id: Date.now(),
+          author: 'admin',
           header: action.topic.header,
           text: action.topic.text || '',
-          comments: action.topic.comments || [],
+          tags: action.topic.tags || [],
+          date: new Date(),
+          topicData: { likes: 0, pollId: 0, comments: [] },
         },
       ];
     case 'ADD_COMMENT': {
