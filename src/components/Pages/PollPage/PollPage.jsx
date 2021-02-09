@@ -2,9 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import GenericPage from '../GenericPage/GenericPage';
-import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
 import { PollsContext } from '../../../shared/state';
 
 const PollPage = () => {
@@ -12,7 +10,6 @@ const PollPage = () => {
   const onAccept = () => {
     setAccept(true);
   };
-  const history = useHistory();
   const { pollId } = useParams();
   const { polls } = useContext(PollsContext);
   const { header, date, author, text, isRadio, tags, pollData, isOpen, isSuccess } = polls[pollId];
@@ -25,11 +22,6 @@ const PollPage = () => {
     <GenericPage>
       {' '}
       <>
-        <a className="button mt-2 " onClick={() => history.push('/polls')}>
-          {' '}
-          <FaLongArrowAltLeft className="mr-3 is-size-4" />
-          Назад к списку
-        </a>
         <div className={'card mt-2 ' + color}>
           <div className="card-content">
             <div className="media mb-2">
@@ -60,7 +52,7 @@ const PollPage = () => {
                     <div className="control p-4">
                       {pollData.items.map((x, i) => (
                         <label className="radio" key={i}>
-                          <input type="radio" name="answer" disabled={isAccept}></input>
+                          <input type="radio" name="answer" disabled={isAccept} />
                           {x}
                         </label>
                       ))}
@@ -76,7 +68,7 @@ const PollPage = () => {
                         return (
                           <React.Fragment key={i}>
                             <label className="checkbox mr-2">
-                              <input type="checkbox" className="mr-2" disabled={isAccept}></input>
+                              <input type="checkbox" className="mr-2" disabled={isAccept} />
                               {e}
                             </label>
                           </React.Fragment>
