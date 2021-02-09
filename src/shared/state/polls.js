@@ -3,10 +3,52 @@ import React, { createContext, useReducer } from 'react';
 export const PollsContext = createContext();
 
 const defaultPolls = [
-  { header: 'Ремонт детской площадки', open: true },
-  { header: 'Коллективная масленица', open: true },
-  { header: 'Замена лифтов', open: false, isAccepted: false },
-  { header: 'Замена почтовых ящиков', open: false, isAccepted: true },
+  {
+    header: 'Меняем унитазы',
+    date: new Date(2021, 1, 27),
+    author: 'Василий Пушкин',
+    text: 'Господа, унитазы в наших домах уже поизносились, нужны бы новые. Голосуем!',
+    isRadio: true,
+    tags: ['официально', 'ремонт'],
+    pollData: { question: 'Хотите новый унитаз?', items: ['Да', 'Нет'], result: 52 },
+  },
+  {
+    header: 'Ремонт детской площадки',
+    date: new Date(2021, 2, 31),
+    author: 'Алоиза Пашкевич',
+    text:
+      'На новый год я пришла пьяная на площадку и сломала качели. Предлагаю вместо них установить бар с пилоном.',
+    isRadio: false,
+    tags: ['неофициально', 'двор', 'дети'],
+    pollData: {
+      question: 'Что устанавливаем?',
+      items: ['Пилон', 'Бар', 'Новые качели'],
+      result: 80,
+    },
+  },
+  {
+    header: 'Празднуем новый год вместе',
+    date: new Date(2020, 11, 31),
+    author: 'Сергей Есенин',
+    text:
+      'Давайте отметим новый год у нас во дворе! Я почитаю стихи, а Алоиза опять сломает качели',
+    isRadio: true,
+    tags: ['неофициально', 'праздник', 'дети'],
+    pollData: { question: 'Придете?', items: ['Да, один', 'Да, с семьей', 'Нет'], result: 72 },
+  },
+  {
+    header: 'А не поменять ли мне жену?',
+    date: new Date(2020, 10, 1),
+    author: 'Лев Толстой',
+    text: 'Что-то боярыня мне моя надоела. Думаю сменить, не знаю на кого. Подскажете?',
+    isRadio: true,
+    tags: ['неофициально', 'семья'],
+    pollData: {
+      question: 'Кого выбрать?',
+      items: ['Людку из третьего', 'Соседа Игоря', 'Зинку с пятого'],
+      result: 14,
+    },
+  },
 ];
 
 const reducer = (state, action) => {
