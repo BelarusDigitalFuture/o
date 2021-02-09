@@ -3,7 +3,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import Poll from '../Poll';
+import Card from '../Card';
 
 const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }) => {
   const [showOpen, setShowOpen] = useState(true);
@@ -85,7 +85,7 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
           </div>
 
           {applyFilters(cardsSet).map((x, i) => (
-            <Poll key={i} {...x} />
+            <Card key={i} {...x} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
           ))}
         </div>
       </div>

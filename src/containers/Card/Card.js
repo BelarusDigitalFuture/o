@@ -1,20 +1,40 @@
 import React, { useState } from 'react';
 
-const Poll = ({ header, date, author, tags, pollData }) => {
+const Card = ({
+  header,
+  date,
+  author,
+  tags,
+  pollData,
+  isTopic = false,
+  isEvent = false,
+  isPoll = false,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const isOpen = date.getTime() >= new Date().getTime();
-  let color = '';
-  if (pollData) {
+  let color = isHovered ? 'has-background-grey-lighter' : 'has-background-light';
+  if (isPoll) {
     if (isOpen) {
       color = isHovered ? 'has-background-warning' : 'has-background-warning-light';
     } else {
-      if (pollData.result > 50) {
+      if (pollData.results.some((x) => x > 50)) {
         color = isHovered ? 'has-background-primary' : 'has-background-primary-light';
       } else {
         color = isHovered ? 'has-background-danger' : 'has-background-danger-light';
       }
     }
+  }
+
+  let dateText;
+  if (isTopic) {
+    dateText = 'Дата создания';
+  }
+  if (isEvent) {
+    dateText = 'Дата проведения';
+  }
+  if (isPoll) {
+    dateText = 'Дата окончания';
   }
 
   return (
@@ -29,7 +49,7 @@ const Poll = ({ header, date, author, tags, pollData }) => {
           <div className="media-content">
             <p className="title is-4">{header}</p>
             <p className="subtitle is-7 mb-1">
-              Автор: {author} | Дата окончания: {date.toLocaleDateString()}
+              Автор: {author} | {dateText}: {date.toLocaleDateString()}
             </p>
             {tags.map((x, i) => (
               <span key={i} className="tag is-info is-light mr-1">
@@ -43,4 +63,4 @@ const Poll = ({ header, date, author, tags, pollData }) => {
   );
 };
 
-export default Poll;
+export default Card;
