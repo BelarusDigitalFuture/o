@@ -10,7 +10,7 @@ import {
   DatePickerField,
   CreatableSelectField,
 } from '../../shared/form';
-import { TagsContext, PollsContext } from '../../shared/state';
+import { TagsContext, PollsContext, TopicsContext } from '../../shared/state';
 import GenericPage from '../Pages/GenericPage/GenericPage';
 
 const PollForm = () => {
@@ -18,6 +18,8 @@ const PollForm = () => {
   const { dispatch } = useContext(PollsContext);
   const history = useHistory();
   const tagOptions = tags && tags.map(({ title }) => ({ label: title, value: title }));
+  const { topics } = useContext(TopicsContext);
+  const topicOptions = topics.map(({ header, id }) => ({ label: header, value: id }));
   const handleFormSubmit = (values) => {
     dispatch({ type: 'ADD_POLL', poll: { ...values } });
     history.push('/polls');
@@ -56,12 +58,12 @@ const PollForm = () => {
           &nbsp;Возможно выбрать несколько вариантов
         </CheckboxField>
         <TextInput label={'Вопрос'} name="question" />
+        <Field label="Варианты ответа" name="items" isMulti component={CreatableSelectField} />
         <Field
-          label="Варианты ответа"
-          name="items"
-          isMulti
-          component={CreatableSelectField}
-          // options={tagOptions}
+          label="Связанное обсуждение"
+          name="discussionId"
+          component={SelectField}
+          options={topicOptions}
         />
       </AppForm>
     </GenericPage>
