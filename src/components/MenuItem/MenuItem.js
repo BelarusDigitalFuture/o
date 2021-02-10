@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom';
 
 const MenuItem = (props) => {
   return (
-    <li>
-      <Link className={props.isActive ? 'is-active' : ''} to={props.url} onClick={props.onClick}>
+    <li className={'pl-3 ' + (props.isActive ? 'active-item-padding' : '')}>
+      <Link
+        className={props.isActive ? 'is-active pl-4' : ''}
+        to={props.url}
+        onClick={props.onClick}
+      >
         {props.name}
       </Link>
     </li>
