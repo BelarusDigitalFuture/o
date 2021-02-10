@@ -25,6 +25,7 @@ const defaultEvents = [
     text:
       'Предлагаю всем принять участие в нашем коллективном НГ. Шампанское, закуски и прочее приносите с собой',
     address: 'ул. Буйло, д. 73/2',
+    position: { lat: 53.85610142832483, lng: 27.453454495887502 },
     tags: ['праздник', 'семья', 'наш дом'],
     eventData: { peopleGoing: 91 },
     discussionId: 0,
@@ -36,6 +37,7 @@ const defaultEvents = [
     date: new Date(2021, 1, 25),
     text: 'Обсуждаем планы на грядующий год, явка не обязательна, но крайне рекомендована',
     address: 'ул. Буйло, д. 73/2',
+    position: { lat: 53.85610142832483, lng: 27.453454495887502 },
     tags: ['официально', 'наш дом'],
     eventData: { peopleGoing: 24 },
     discussionId: 0,
@@ -57,6 +59,7 @@ const reducer = (state, action) => {
           tags: action.event.tags || [],
           eventData: { peopleGoing: 0 },
           discussionId: action.event.discussionId || 0,
+          position: action.event.position,
         },
       ];
     default:

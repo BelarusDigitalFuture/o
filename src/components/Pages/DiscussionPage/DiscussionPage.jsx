@@ -6,6 +6,7 @@ import Comment from '../../../containers/Comment/Comment';
 import TextInput from '../../../shared/form/Input/Input';
 import AppForm from '../../../shared/form/Form';
 import * as Yup from 'yup';
+import { Formik } from 'formik';
 
 const DiscussionPage = () => {
   const { topicId } = useParams();
@@ -55,9 +56,8 @@ const DiscussionPage = () => {
         <Comment key={i} {...x} />
       ))}
 
-      <AppForm
-        buttonText="Отправить"
-        initial={{ comment: '' }}
+      <Formik
+        initialValues={{ comment: '' }}
         validationSchema={Yup.object({
           comment: Yup.string().required('Required'),
         })}
@@ -65,8 +65,10 @@ const DiscussionPage = () => {
           dispatch({ type: 'ADD_COMMENT', comment: { ...values, topicId: topicId } });
         }}
       >
-        <TextInput label={'Ваш комментарий'} name="comment" />
-      </AppForm>
+        <AppForm buttonText="Отправить">
+          <TextInput label={'Ваш комментарий'} name="comment" />
+        </AppForm>
+      </Formik>
     </GenericPage>
   );
 };
