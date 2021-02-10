@@ -12,6 +12,7 @@ const defaultEvents = [
   //   text: '',
   //   address: '',
   //   tags: [],
+  //   discussionId: 0,
   //   eventData: {
   //    peopleGoing: 0,
   //   },
@@ -37,7 +38,7 @@ const defaultEvents = [
     address: 'ул. Буйло, д. 73/2',
     tags: ['официально', 'наш дом'],
     eventData: { peopleGoing: 24 },
-    discussionId: 1,
+    discussionId: 0,
   },
 ];
 
@@ -55,6 +56,7 @@ const reducer = (state, action) => {
           address: action.event.address || '',
           tags: action.event.tags || [],
           eventData: { peopleGoing: 0 },
+          discussionId: action.event.discussionId || 0,
         },
       ];
     default:

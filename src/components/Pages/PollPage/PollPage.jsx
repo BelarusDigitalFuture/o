@@ -52,10 +52,22 @@ const PollPage = () => {
                     #{x}
                   </span>
                 ))}
-                <p className="subtitle is-7 mt-2">Дата окончания : {date.toLocaleDateString()}</p>
+                <p className="subtitle is-7 mt-2 mb-2">
+                  Дата окончания : {date.toLocaleDateString()}
+                </p>
+                {pollData.discussionId ? (
+                  <a onClick={() => history.push(`/discussions/${pollData.discussionId}`)}>
+                    Открыть обсуждение
+                  </a>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
-            <div className="content">{text}</div>
+            <div className="content">
+              <hr />
+              {text}
+            </div>
             {isOpen ? (
               <section className="section p-0 has-background-link-light">
                 <div className="panel-heading">
