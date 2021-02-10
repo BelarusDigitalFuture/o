@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Field } from 'formik';
 import * as Yup from 'yup';
 import { AppForm } from '../../shared';
@@ -8,6 +8,7 @@ import GenericPage from '../Pages/GenericPage/GenericPage';
 import { TagsContext, EventsContext, TopicsContext } from '../../shared/state';
 
 const EventForm = () => {
+  const { topicId } = useParams();
   const { tags } = useContext(TagsContext);
   const { dispatch } = useContext(EventsContext);
   const history = useHistory();
@@ -32,7 +33,7 @@ const EventForm = () => {
   return (
     <GenericPage header="Новая встреча">
       <AppForm
-        initial={{ tags: [], header: '', text: '', address: '', date: '' }}
+        initial={{ tags: [], header: '', text: '', address: '', date: '', discussionId: topicId }}
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
@@ -55,7 +56,6 @@ const EventForm = () => {
         <Field
           label="Связанное обсуждение"
           name="discussionId"
-          // isMulti
           component={SelectField}
           options={topicOptions}
         />

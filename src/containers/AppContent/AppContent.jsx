@@ -35,7 +35,7 @@ const AppContent = () => {
               <Route path="/polls">
                 <CardsList data={polls} isPolls />
               </Route>
-              <Route path="/events/new">
+              <Route path="/events/new/:topicId?">
                 <EventForm />
               </Route>
               <Route path="/events">
