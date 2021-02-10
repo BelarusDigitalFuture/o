@@ -35,9 +35,9 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
     <>
       <div className="section pb-5">
         <div className="box">
-          {isEvents || isPolls ? (
-            <div className="tabs mb-2">
-              <ul>
+          <div className="tabs mb-2">
+            {isEvents || isPolls ? (
+              <ul className="is-left">
                 <li className={showOpen ? 'is-active' : ''}>
                   <a onClick={() => setShowOpen(true)}>{isPolls ? 'Открытые' : 'Грядущие'}</a>
                 </li>
@@ -45,23 +45,23 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
                   <a onClick={() => setShowOpen(false)}>Завершенные</a>
                 </li>
               </ul>
+            ) : (
+              <></>
+            )}
 
-              <div className="is-right">
-                <li className={isFilterShowed ? 'is-active' : ''}>
-                  <a
-                    style={{ display: 'inline-block' }}
-                    onClick={() => setIsFilterShowed(!isFilterShowed)}
-                  >
-                    <span className="icon is-small">
-                      <FontAwesomeIcon className="aria-hidden" icon={faSearch} />
-                    </span>
-                  </a>
-                </li>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
+            <ul className="is-right">
+              <li className={isFilterShowed ? 'is-active' : ''}>
+                <a
+                  style={{ display: 'inline-block' }}
+                  onClick={() => setIsFilterShowed(!isFilterShowed)}
+                >
+                  <span className="icon is-small">
+                    <FontAwesomeIcon className="aria-hidden" icon={faSearch} />
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
 
           <div className={isFilterShowed ? '' : 'is-hidden'}>
             <CardsListFilter
@@ -75,6 +75,7 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
               onTagsChange={(tags) => {
                 setFilterTags(tags.map((x) => x.value));
               }}
+              hasDatePicker={!isTopics}
             />
           </div>
           {showOpen ? (
