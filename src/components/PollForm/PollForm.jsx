@@ -43,9 +43,9 @@ const PollForm = () => {
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
-        <TextInput label={'Header'} name="header" />
-        <TextInput label={'Text'} name="text" />
-        <Field label="Tags" name={'tags'} isMulti component={SelectField} options={tagOptions} />
+        <TextInput label={'Заголовок'} name="header" />
+        <TextInput label={'Описание'} name="text" />
+        <Field label="Теги" name={'tags'} isMulti component={SelectField} options={tagOptions} />
         <Field
           label="Дата проведения"
           name="date"
