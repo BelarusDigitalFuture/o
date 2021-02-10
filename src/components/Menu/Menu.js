@@ -4,13 +4,12 @@ import MenuItem from '../MenuItem';
 const Menu = (props) => {
   return (
     <aside
-      className="column menu is-2 is-narrow-mobile is-fullheight section is-static"
+      className="column menu is-2 is-block-mobile is-inline is-fullheight section is-static"
       style={{
         backgroundColor: '#f9efef',
         height: '100vh',
         position: 'sticky',
         overflowAnchor: 'none',
-        display: 'inline-block',
         top: '0',
         overflowY: 'auto',
       }}
