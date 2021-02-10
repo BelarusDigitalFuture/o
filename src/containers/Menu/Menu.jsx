@@ -4,9 +4,9 @@ import Menu from '../../components/Menu';
 const menuElements = [
   { name: 'Главная', url: '/' },
   { name: 'Мои данные', url: '/mydata' },
+  { name: 'Обсуждения', url: '/discussions' },
   { name: 'Голосования', url: '/polls' },
   { name: 'Встречи', url: '/events' },
-  { name: 'Обсуждения', url: '/discussions' },
 ];
 
 const AppMenu = () => {
