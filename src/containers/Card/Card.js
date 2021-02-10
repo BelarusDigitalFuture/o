@@ -12,9 +12,9 @@ const Card = ({
   isEvent = false,
   isPoll = false,
   isNew = false,
+  onClick,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const history = useHistory();
 
   const isOpen = date.getTime() >= new Date().getTime();
   let color = isHovered ? 'has-background-grey-lighter' : 'has-background-light';
@@ -44,13 +44,14 @@ const Card = ({
     dateText = 'Дата окончания';
   }
 
+  const clickableProps = {
+    onClick,
+    onMouseEnter: () => setIsHovered(true),
+    onMouseLeave: () => setIsHovered(false),
+  };
+
   return (
-    <div
-      className={'card mt-2 ' + color}
-      onClick={() => history.push(`${window.location.pathname}/${id}`)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className={'card mt-2 ' + color} {...(onClick ? clickableProps : {})}>
       <div className="card-content">
         <div className="media">
           <div className="media-content">

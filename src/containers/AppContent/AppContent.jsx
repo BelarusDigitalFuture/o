@@ -38,6 +38,7 @@ const AppContent = () => {
               </Route>
               <Route path="/events/new/:topicId?">
                 <EventForm />
+              </Route>
               <Route path="/events/:eventId">
                 <EventPage />
               </Route>
@@ -53,7 +54,6 @@ const AppContent = () => {
               <Route path="/discussions">
                 <CardsList data={topics} isTopics />
               </Route>
-
               <Route path="/">
                 <MainPage />
               </Route>

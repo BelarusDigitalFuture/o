@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -30,6 +31,7 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
     cardsSet = data.sort((x, y) => y.date.getTime() - x.date.getTime());
   }
   const tagList = cardsSet.map((x) => x.tags).flat();
+  const history = useHistory();
 
   return (
     <>
@@ -88,7 +90,14 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
             ''
           )}
           {applyFilters(cardsSet).map((x, i) => (
-            <Card key={i} {...x} isTopic={isTopics} isEvent={isEvents} isPoll={isPolls} />
+            <Card
+              key={i}
+              {...x}
+              isTopic={isTopics}
+              isEvent={isEvents}
+              isPoll={isPolls}
+              onClick={() => history.push(`${window.location.pathname}/${x.id}`)}
+            />
           ))}
         </div>
       </div>
