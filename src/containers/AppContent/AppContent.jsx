@@ -11,6 +11,7 @@ import MyData from '../../components/MyData';
 import AppMenu from '../Menu/Menu';
 import PollPage from '../../components/Pages/PollPage';
 import { PollsContext, TopicsContext, EventsContext } from '../../shared/state';
+import { EventPage } from '../../components/Pages';
 
 const AppContent = () => {
   const { polls } = useContext(PollsContext);
@@ -37,6 +38,8 @@ const AppContent = () => {
               </Route>
               <Route path="/events/new/:topicId?">
                 <EventForm />
+              <Route path="/events/:eventId">
+                <EventPage />
               </Route>
               <Route path="/events">
                 <CardsList data={events} isEvents />
