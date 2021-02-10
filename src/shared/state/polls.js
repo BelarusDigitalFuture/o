@@ -49,6 +49,8 @@ const defaultPolls = [
       discussionId: 1,
     },
     id: 2,
+    userAmount: 100,
+    quorum: 0.5,
   },
   {
     header: 'А не поменять ли мне жену?',
@@ -60,10 +62,29 @@ const defaultPolls = [
     pollData: {
       question: 'Кого выбрать?',
       items: ['Людку из третьего', 'Соседа Игоря', 'Зинку с пятого'],
-      results: [1, 3, 12],
+      results: [19, 35, 12],
       discussionId: 1,
     },
     id: 3,
+    userAmount: 100,
+    quorum: 0.5,
+  },
+  {
+    header: 'Голосование за очень важный вопрос',
+    date: new Date(2020, 11, 31),
+    author: 'Председатель дома',
+    text: 'Должны проголосовать не менее 50% жильцов',
+    isRadio: true,
+    tags: ['неофициально', 'праздник', 'дети'],
+    pollData: {
+      question: 'Вы согласны?',
+      items: ['Да', 'Нет'],
+      results: [14, 27],
+      discussionId: 1,
+    },
+    id: 4,
+    userAmount: 100,
+    quorum: 0.5,
   },
 ];
 
@@ -86,6 +107,23 @@ const reducer = (state, action) => {
             results: Array(action.poll.items.length).fill(0),
             discussionId: action.poll.discussionId || 0,
           },
+        },
+      ];
+    case 'REPEAT_POLL':
+      return [
+        ...state.filter((e) => e.id !== action.payload.id),
+        {
+          header: `${action.payload.header} (ПОВТОРНО)`,
+          date: new Date(2021, 1, 27),
+          author: action.payload.author,
+          text: action.payload.text,
+          isRadio: !action.payload.isRadio || true,
+          tags: action.payload.tags,
+          isAccepted: action.payload.isAccepted || false,
+          pollData: action.payload.pollData,
+          id: 4,
+          userAmount: action.payload.userAmount,
+          quorum: action.payload.quorum * 0.5,
         },
       ];
     default:

@@ -7,6 +7,8 @@ import Card from '../Card';
 
 const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }) => {
   const [showOpen, setShowOpen] = useState(true);
+  const [isCompleteOpen, setCompleteOpen] = useState(false);
+  const [isFailedOpen, setFailedOpen] = useState(false);
   const [isFilterShowed, setIsFilterShowed] = useState(false);
   const [filterHeaderString, setFilterHeaderString] = useState('');
   const [filterDate, setFilterDate] = useState('');
@@ -24,13 +26,26 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
   if (isPolls || isEvents) {
     cardsSet = showOpen
       ? data.filter((x) => x.date.getTime() >= new Date().getTime())
-      : data.filter((x) => x.date.getTime() < new Date().getTime());
+      : (cardsSet = isCompleteOpen
+          ? data.filter((x) => {
+              return isPolls
+                ? x.date.getTime() < new Date().getTime() &&
+                    x.userAmount * x.quorum <= x.pollData.results.reduce((ac, cur) => ac + cur)
+                : x.date.getTime() < new Date().getTime();
+            })
+          : (cardsSet = isFailedOpen
+              ? data.filter((x) => {
+                  return isPolls
+                    ? x.date.getTime() < new Date().getTime() &&
+                        x.userAmount * x.quorum > x.pollData.results.reduce((ac, cur) => ac + cur)
+                    : null;
+                })
+              : null));
     cardsSet = cardsSet.sort((x, y) => x.date.getTime() - y.date.getTime());
   } else {
     cardsSet = data.sort((x, y) => y.date.getTime() - x.date.getTime());
   }
   const tagList = cardsSet.map((x) => x.tags).flat();
-
   return (
     <>
       <div className="section pb-5">
@@ -39,11 +54,40 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
             {isEvents || isPolls ? (
               <ul className="is-left">
                 <li className={showOpen ? 'is-active' : ''}>
-                  <a onClick={() => setShowOpen(true)}>{isPolls ? 'Открытые' : 'Грядущие'}</a>
+                  <a
+                    onClick={() => {
+                      setShowOpen(true);
+                      setCompleteOpen(false);
+                      setFailedOpen(false);
+                    }}
+                  >
+                    {isPolls ? 'Открытые' : 'Грядущие'}
+                  </a>
                 </li>
-                <li className={showOpen ? '' : 'is-active'}>
-                  <a onClick={() => setShowOpen(false)}>Завершенные</a>
+                <li className={isCompleteOpen ? 'is-active' : ''}>
+                  <a
+                    onClick={() => {
+                      setShowOpen(false);
+                      setCompleteOpen(true);
+                      setFailedOpen(false);
+                    }}
+                  >
+                    Завершенные
+                  </a>
                 </li>
+                {isPolls ? (
+                  <li className={isFailedOpen ? 'is-active' : ''}>
+                    <a
+                      onClick={() => {
+                        setShowOpen(false);
+                        setCompleteOpen(false);
+                        setFailedOpen(true);
+                      }}
+                    >
+                      Несостоявшиеся
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             ) : (
               <></>
