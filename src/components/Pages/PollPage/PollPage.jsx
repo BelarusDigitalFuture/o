@@ -12,7 +12,14 @@ const PollPage = () => {
   };
   const { pollId } = useParams();
   const { polls } = useContext(PollsContext);
-  const { header, date, author, text, isRadio, tags, pollData, isOpen, isSuccess } = polls[pollId];
+  const poll = polls.find((x) => x.id.toString() === pollId);
+  if (!poll) {
+    return <GenericPage />;
+  }
+  const { header, date, author, text, isRadio, tags, pollData } = poll;
+  const isOpen = date.getTime() >= new Date().getTime();
+  const isSuccess = pollData.results.some((x) => x > 50);
+
   let color = isOpen
     ? 'has-background-warning-light'
     : isSuccess

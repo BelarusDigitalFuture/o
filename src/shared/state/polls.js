@@ -17,7 +17,6 @@ const defaultPolls = [
       discussionId: 1,
     },
     id: 0,
-    isOpen: true,
   },
   {
     header: 'Ремонт детской площадки',
@@ -34,7 +33,6 @@ const defaultPolls = [
       discussionId: 1,
     },
     id: 1,
-    isOpen: true,
   },
   {
     header: 'Празднуем новый год вместе',
@@ -51,8 +49,6 @@ const defaultPolls = [
       discussionId: 1,
     },
     id: 2,
-    isOpen: false,
-    isSuccess: false,
   },
   {
     header: 'А не поменять ли мне жену?',
@@ -68,8 +64,6 @@ const defaultPolls = [
       discussionId: 1,
     },
     id: 3,
-    isOpen: false,
-    isSuccess: true,
   },
 ];
 
@@ -79,16 +73,18 @@ const reducer = (state, action) => {
       return [
         ...state,
         {
+          id: Date.now(),
           header: action.poll.header,
           text: action.poll.text,
-          isRadio: !action.poll.multichoice || true,
-          open: action.poll.open || true,
-          isAccepted: action.poll.isAccepted || false,
-          date: new Date(),
-          author: 'user',
+          isRadio: !action.poll.multichoice,
+          date: action.poll.date,
+          author: 'admin',
+          tags: action.poll.tags,
           pollData: {
             question: action.poll.question,
-            items: [],
+            items: action.poll.items,
+            results: Array(action.poll.items.length).fill(0),
+            discussionId: action.poll.discussionId || 0,
           },
         },
       ];
