@@ -6,14 +6,16 @@ const MyData = (props) => {
       <article className="media">
         <figure className="media-left">
           <p className="image is-64x64">
-            <img src="/userpic.jpeg" />
+            <img alt="Userpic" src="/userpic.jpeg" />
           </p>
         </figure>
         <div className="media-content">
           <div className="content">
-            <p>
+            <p className="mb-1">
               <strong>Юзер Юзерович</strong> <small>Председатель правления ТС</small>
             </p>
+            <p className="subtitle is-7 mb-1">Квартира №32</p>
+            <p className="subtitle is-7 ">Площадь (общая/жилая) - 75/68м²</p>
           </div>
         </div>
       </article>
@@ -24,7 +26,7 @@ const MyData = (props) => {
         <div className="field">
           <label className="label">Имя</label>
           <div className="control">
-            <input className="input" type="text" defaultValue="Юзер Юзерович" />
+            <input className="input" disabled type="text" defaultValue="Юзер Юзерович" />
           </div>
         </div>
         <div className="field">
