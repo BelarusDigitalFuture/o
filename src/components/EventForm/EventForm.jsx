@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { AppForm } from '../../shared';
 import { TextInput, SelectField, DatePickerField } from '../../shared/form';
 import GenericPage from '../Pages/GenericPage/GenericPage';
-import { TagsContext, EventsContext } from '../../shared/state';
+import { TagsContext, EventsContext, TopicsContext } from '../../shared/state';
 
 const EventForm = () => {
   const { tags } = useContext(TagsContext);
@@ -13,6 +13,10 @@ const EventForm = () => {
   const history = useHistory();
   const selectFieldOptions = tags && tags.map(({ title }) => ({ label: title, value: title }));
   const datePickerCustomInput = <input className="input" type="search" />;
+
+  const { topics } = useContext(TopicsContext);
+  const topicOptions = topics.map(({ header, id }) => ({ label: header, value: id }));
+
   const handleFormSubmit = (values) => {
     dispatch({ type: 'ADD_EVENT', event: { ...values } });
     history.push('/events');
@@ -47,6 +51,13 @@ const EventForm = () => {
           name="date"
           component={DatePickerField}
           customInput={datePickerCustomInput}
+        />
+        <Field
+          label="Связанное обсуждение"
+          name="discussionId"
+          // isMulti
+          component={SelectField}
+          options={topicOptions}
         />
       </AppForm>
     </GenericPage>
