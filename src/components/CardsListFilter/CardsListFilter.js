@@ -11,13 +11,14 @@ const CardsListFilter = ({
   datesHighlighted,
   onFilterDateChange,
   dateSelected,
+  hasDatePicker = true,
 }) => {
   const customInput = <input className="input" type="search" />;
 
   return (
     <div className="box">
       <div className="columns">
-        <div className="column is-three-quarters">
+        <div className={'column ' + (hasDatePicker ? 'is-three-quarters' : '')}>
           <input
             type="search"
             className="input"
@@ -25,7 +26,7 @@ const CardsListFilter = ({
             onChange={onFilterHeaderChange}
           />
         </div>
-        <div className="column">
+        <div className={'column ' + (hasDatePicker ? '' : 'is-hidden')}>
           <DatePicker
             wrapperClassName={'datePickerWrapper'}
             customInput={customInput}
