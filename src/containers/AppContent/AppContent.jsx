@@ -26,7 +26,7 @@ const AppContent = () => {
               <Route path="/mydata">
                 <MyData />
               </Route>
-              <Route path="/polls/new">
+              <Route path="/polls/new/:topicId?">
                 <PollForm />
               </Route>
               <Route path="/polls/:pollId">
