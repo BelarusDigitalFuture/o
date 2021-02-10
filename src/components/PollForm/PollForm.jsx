@@ -42,23 +42,19 @@ const PollForm = () => {
   return (
     <GenericPage>
       <Formik
-        initialValues={{ tags: [], header: '', text: '', date: '', question: '', items: [] }}
+        initialValues={{
+          tags: [],
+          header: '',
+          text: '',
+          date: '',
+          question: '',
+          items: [],
+          discussionId: topicId,
+        }}
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
-        <AppForm
-          initial={{
-            tags: [],
-            header: '',
-            text: '',
-            date: '',
-            question: '',
-            items: [],
-            discussionId: topicId,
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleFormSubmit}
-        >
+        <AppForm>
           <TextInput label={'Заголовок'} name="header" />
           <TextInput label={'Описание'} name="text" />
           <Field label="Теги" name={'tags'} isMulti component={SelectField} options={tagOptions} />
