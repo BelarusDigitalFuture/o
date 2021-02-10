@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Field } from 'formik';
+import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { AppForm } from '../../shared';
 import { TextInput, SelectField } from '../../shared/form';
@@ -24,15 +24,17 @@ const DiscussionForm = () => {
 
   return (
     <GenericPage header="Новое обсуждение">
-      <AppForm
-        initial={{ tags: [], header: '', text: '' }}
+      <Formik
+        initialValues={{ tags: [], header: '', text: '' }}
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
-        <TextInput label={'Заголовок'} name="header" />
-        <TextInput label={'Текст'} name="text" />
-        <Field label="Теги" name="tags" isMulti component={SelectField} options={options} />
-      </AppForm>
+        <AppForm>
+          <TextInput label={'Заголовок'} name="header" />
+          <TextInput label={'Текст'} name="text" />
+          <Field label="Теги" name="tags" isMulti component={SelectField} options={options} />
+        </AppForm>
+      </Formik>
     </GenericPage>
   );
 };
