@@ -19,7 +19,7 @@ const AppContent = () => {
   return (
     <Router>
       <div>
-        <section className=" columns is-fullheight">
+        <div className="columns is-fullheight is-marginless">
           <AppMenu />
           <div className="container column is-10">
             <Switch>
@@ -56,7 +56,7 @@ const AppContent = () => {
               </Route>
             </Switch>
           </div>
-        </section>
+        </div>
       </div>
     </Router>
   );
