@@ -53,7 +53,7 @@ const PollForm = () => {
           customInput={<input className="input" type="search" />}
         />
         <CheckboxField label="Возможно выбрать несколько вариантов?" name="multichoice">
-          Multi
+          &nbsp;Возможно выбрать несколько вариантов
         </CheckboxField>
         <TextInput label={'Вопрос'} name="question" />
         <Field
