@@ -13,8 +13,7 @@ const GenericPage = ({ header = '', hasBackButton = true, children }) => {
             <button
               className="button is-info is-light"
               onClick={() => {
-                //TODO ugly af
-                history.push(window.location.pathname.split('/').slice(0, -1).join('/'));
+                history.goBack();
               }}
             >
               <FontAwesomeIcon className="aria-hidden" icon={faArrowLeft} />

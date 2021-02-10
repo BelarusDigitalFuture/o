@@ -1,6 +1,14 @@
 .active-item-padding {
   background-color: #ff8080; }
 
+.menu-class {
+  background-color: #f9efef;
+  height: 100vh;
+  position: sticky;
+  overflow-anchor: none;
+  top: 0;
+  overflow-y: auto; }
+
 /*! bulma.io v0.9.2 | MIT License | github.com/jgthms/bulma */
 /* Bulma Utilities */
 .button, .input, .textarea, .select select, .file-cta,
