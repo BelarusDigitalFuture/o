@@ -12,7 +12,7 @@ import { setFlourishScript } from '../../../shared/service';
 const PollPage = () => {
   const [isAccept, setAccept] = useState(false);
   const { pollId } = useParams();
-  const { polls } = useContext(PollsContext);
+  const { dispatch, polls } = useContext(PollsContext);
   const history = useHistory();
 
   const poll = polls.find((x) => x.id.toString() === pollId);
@@ -21,6 +21,10 @@ const PollPage = () => {
   }
   const onAccept = () => {
     setAccept(true);
+  };
+  const сreateRepeatPoll = () => {
+    dispatch({ type: 'REPEAT_POLL', payload: poll });
+    history.push(`${window.location.pathname}`);
   };
 
   const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
@@ -207,16 +211,7 @@ const PollPage = () => {
             ) : null}
             {isFailed ? (
               <footer className="card-footer">
-                <a
-                  style={{ height: 'auto', whiteSpace: 'normal' }}
-                  className="button mt-2"
-                  onClick={() => {
-                    history.push({
-                      pathname: '/polls/new',
-                      state: poll,
-                    });
-                  }}
-                >
+                <a className="button mt-2" onClick={сreateRepeatPoll}>
                   Создать голосование повторно
                 </a>
               </footer>
