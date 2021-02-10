@@ -1,8 +1,9 @@
 import React from 'react';
+import GenericPage from '../Pages/GenericPage/GenericPage';
 
 const MyData = (props) => {
   return (
-    <div className="section pb-5">
+    <GenericPage hasBackButton={false}>
       <article className="media">
         <figure className="media-left">
           <p className="image is-64x64">
@@ -61,7 +62,7 @@ const MyData = (props) => {
       <div className="container">
         <button className="button is-success">Сохранить изменения</button>
       </div>
-    </div>
+    </GenericPage>
   );
 };
 

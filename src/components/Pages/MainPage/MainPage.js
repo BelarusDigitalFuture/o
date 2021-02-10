@@ -1,10 +1,11 @@
 import React from 'react';
+import GenericPage from '../GenericPage/GenericPage';
 
 const MainPage = (props) => {
   return (
-    <div className="section pb-5">
+    <GenericPage hasBackButton={false}>
       <p>Here is an index page</p>
-    </div>
+    </GenericPage>
   );
 };
 
