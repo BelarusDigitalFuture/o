@@ -34,7 +34,14 @@ const DiscussionPage = () => {
           </button>
         </p>
         <p className="control">
-          <button className="button is-small">Создать встречу</button>
+          <button
+            className="button is-small"
+            onClick={() => {
+              history.push(`/events/new/${topicId}`);
+            }}
+          >
+            Создать встречу
+          </button>
         </p>
       </div>
 
