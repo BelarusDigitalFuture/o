@@ -20,7 +20,7 @@ const PollPage = () => {
   };
   const сreateRepeatPoll = () => {
     dispatch({ type: 'REPEAT_POLL', payload: poll });
-    history.push(`${window.location.pathname}`);
+    history.push('/polls');
   };
 
   const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
