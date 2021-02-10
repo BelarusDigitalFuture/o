@@ -9,10 +9,10 @@ const Menu = (props) => {
         backgroundColor: '#f9efef',
         height: '100vh',
         position: 'sticky',
-        'overflow-anchor': 'none',
+        overflowAnchor: 'none',
         display: 'inline-block',
         top: '0',
-        'overflow-y': 'auto',
+        overflowY: 'auto',
       }}
     >
       <figure className="image ">

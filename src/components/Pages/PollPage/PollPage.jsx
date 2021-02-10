@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import GenericPage from '../GenericPage/GenericPage';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { PollsContext } from '../../../shared/state';
 
 const PollPage = () => {
@@ -19,6 +19,7 @@ const PollPage = () => {
   const { header, date, author, text, isRadio, tags, pollData } = poll;
   const isOpen = date.getTime() >= new Date().getTime();
   const isSuccess = pollData.results.some((x) => x > 50);
+  const history = useHistory();
 
   let color = isOpen
     ? 'has-background-warning-light'
@@ -42,10 +43,22 @@ const PollPage = () => {
                     #{x}
                   </span>
                 ))}
-                <p className="subtitle is-7 mt-2">Дата окончания : {date.toLocaleDateString()}</p>
+                <p className="subtitle is-7 mt-2 mb-2">
+                  Дата окончания : {date.toLocaleDateString()}
+                </p>
+                {pollData.discussionId ? (
+                  <a onClick={() => history.push(`/discussions/${pollData.discussionId}`)}>
+                    Открыть обсуждение
+                  </a>
+                ) : (
+                  ''
+                )}
               </div>
             </div>
-            <div className="content">{text}</div>
+            <div className="content">
+              <hr />
+              {text}
+            </div>
             {isOpen ? (
               <section className="section p-0 has-background-link-light">
                 <div className="panel-heading">
