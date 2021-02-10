@@ -1,1 +1,1 @@
-export { default as Map } from './Map/Map';
+export { Map, LocationMarker } from './Map';

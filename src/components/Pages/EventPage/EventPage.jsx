@@ -3,19 +3,26 @@ import { useParams } from 'react-router-dom';
 import GenericPage from '../GenericPage/GenericPage';
 import { EventsContext } from '../../../shared/state';
 import { EventCard } from '../../../containers/Card';
-import { Map } from '../../../shared/components';
+import { Map, LocationMarker } from '../../../shared/components';
 
 const EventPage = () => {
   const { eventId } = useParams();
   const { events } = useContext(EventsContext);
-  const { dispatch } = useContext(EventsContext);
 
   const event = events.find((event) => event.id.toString() === eventId);
 
   return (
     <GenericPage header={event.header}>
-      <EventCard {...event} />
-      <Map />
+      <div className="block">
+        <EventCard {...event} />
+      </div>
+
+      <div className="card">
+        <div className="column">{event.address}</div>
+        <Map center={event.position}>
+          {event.position && <LocationMarker position={event.position} />}
+        </Map>
+      </div>
     </GenericPage>
   );
 };
