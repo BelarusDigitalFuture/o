@@ -1,18 +1,23 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Field } from 'formik';
 import * as Yup from 'yup';
 import { AppForm } from '../../shared';
 import { TextInput, SelectField, DatePickerField } from '../../shared/form';
 import GenericPage from '../Pages/GenericPage/GenericPage';
-import { TagsContext, EventsContext } from '../../shared/state';
+import { TagsContext, EventsContext, TopicsContext } from '../../shared/state';
 
 const EventForm = () => {
+  const { topicId } = useParams();
   const { tags } = useContext(TagsContext);
   const { dispatch } = useContext(EventsContext);
   const history = useHistory();
   const selectFieldOptions = tags && tags.map(({ title }) => ({ label: title, value: title }));
   const datePickerCustomInput = <input className="input" type="search" />;
+
+  const { topics } = useContext(TopicsContext);
+  const topicOptions = topics.map(({ header, id }) => ({ label: header, value: id }));
+
   const handleFormSubmit = (values) => {
     dispatch({ type: 'ADD_EVENT', event: { ...values } });
     history.push('/events');
@@ -28,7 +33,7 @@ const EventForm = () => {
   return (
     <GenericPage header="Новая встреча">
       <AppForm
-        initial={{ tags: [], header: '', text: '', address: '', date: '' }}
+        initial={{ tags: [], header: '', text: '', address: '', date: '', discussionId: topicId }}
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
@@ -47,6 +52,12 @@ const EventForm = () => {
           name="date"
           component={DatePickerField}
           customInput={datePickerCustomInput}
+        />
+        <Field
+          label="Связанное обсуждение"
+          name="discussionId"
+          component={SelectField}
+          options={topicOptions}
         />
       </AppForm>
     </GenericPage>

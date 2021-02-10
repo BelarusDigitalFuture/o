@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { Field } from 'formik';
 import * as Yup from 'yup';
 import { AppForm } from '../../shared';
@@ -10,14 +10,17 @@ import {
   DatePickerField,
   CreatableSelectField,
 } from '../../shared/form';
-import { TagsContext, PollsContext } from '../../shared/state';
+import { TagsContext, PollsContext, TopicsContext } from '../../shared/state';
 import GenericPage from '../Pages/GenericPage/GenericPage';
 
 const PollForm = () => {
+  const { topicId } = useParams();
   const { tags } = useContext(TagsContext);
   const { dispatch } = useContext(PollsContext);
   const history = useHistory();
   const tagOptions = tags && tags.map(({ title }) => ({ label: title, value: title }));
+  const { topics } = useContext(TopicsContext);
+  const topicOptions = topics.map(({ header, id }) => ({ label: header, value: id }));
   const handleFormSubmit = (values) => {
     dispatch({ type: 'ADD_POLL', poll: { ...values } });
     history.push('/polls');
@@ -39,7 +42,15 @@ const PollForm = () => {
   return (
     <GenericPage>
       <AppForm
-        initial={{ tags: [], header: '', text: '', date: '', question: '', items: [] }}
+        initial={{
+          tags: [],
+          header: '',
+          text: '',
+          date: '',
+          question: '',
+          items: [],
+          discussionId: topicId,
+        }}
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
       >
@@ -56,12 +67,12 @@ const PollForm = () => {
           &nbsp;Возможно выбрать несколько вариантов
         </CheckboxField>
         <TextInput label={'Вопрос'} name="question" />
+        <Field label="Варианты ответа" name="items" isMulti component={CreatableSelectField} />
         <Field
-          label="Варианты ответа"
-          name="items"
-          isMulti
-          component={CreatableSelectField}
-          // options={tagOptions}
+          label="Связанное обсуждение"
+          name="discussionId"
+          component={SelectField}
+          options={topicOptions}
         />
       </AppForm>
     </GenericPage>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import GenericPage from '../GenericPage/GenericPage';
 import { TopicsContext } from '../../../shared/state';
 import Comment from '../../../containers/Comment/Comment';
@@ -11,6 +11,7 @@ const DiscussionPage = () => {
   const { topicId } = useParams();
   const { topics } = useContext(TopicsContext);
   const { dispatch } = useContext(TopicsContext);
+  const history = useHistory();
 
   const topic = topics.find((x) => x.id.toString() === topicId);
 
@@ -21,6 +22,29 @@ const DiscussionPage = () => {
 
   return (
     <GenericPage header={topic.header}>
+      <div className="field is-grouped">
+        <p className="control">
+          <button
+            className="button is-small"
+            onClick={() => {
+              history.push(`/polls/new/${topicId}`);
+            }}
+          >
+            Создать голосование
+          </button>
+        </p>
+        <p className="control">
+          <button
+            className="button is-small"
+            onClick={() => {
+              history.push(`/events/new/${topicId}`);
+            }}
+          >
+            Создать встречу
+          </button>
+        </p>
+      </div>
+
       <Comment
         author={topic.author}
         date={topic.date}

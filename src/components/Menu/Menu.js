@@ -3,18 +3,7 @@ import MenuItem from '../MenuItem';
 
 const Menu = (props) => {
   return (
-    <aside
-      className="column menu is-2 is-narrow-mobile is-fullheight section is-static"
-      style={{
-        backgroundColor: '#f9efef',
-        height: '100vh',
-        position: 'sticky',
-        'overflow-anchor': 'none',
-        display: 'inline-block',
-        top: '0',
-        'overflow-y': 'auto',
-      }}
-    >
+    <aside className="column menu-class menu is-2 is-block-mobile is-inline is-fullheight section is-static">
       <figure className="image ">
         <img src="/logo.svg" />
       </figure>
