@@ -85,6 +85,7 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
               id="new"
               header={<FontAwesomeIcon className="aria-hidden" size="2x" icon={faPlusSquare} />}
               isNew
+              onClick={() => history.push(`${window.location.pathname}/new`)}
             />
           ) : (
             ''

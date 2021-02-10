@@ -1,3 +1,4 @@
 import { AppForm } from './form';
+import { Geocoder, Logger } from './service';
 
-export { AppForm };
+export { AppForm, Geocoder, Logger };

@@ -59,6 +59,7 @@ const reducer = (state, action) => {
           tags: action.event.tags || [],
           eventData: { peopleGoing: 0 },
           discussionId: action.event.discussionId || 0,
+          position: action.event.position,
         },
       ];
     default:

@@ -6,10 +6,15 @@ const containerStyle = {
   height: '300px',
 };
 
-export default function Map({ center, children }) {
+export default function Map({ center, onClick, children }) {
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center || DEFAULT_COORDS} zoom={16}>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center || DEFAULT_COORDS}
+        zoom={16}
+        onClick={onClick}
+      >
         {children}
       </GoogleMap>
     </LoadScript>

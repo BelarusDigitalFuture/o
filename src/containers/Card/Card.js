@@ -44,11 +44,14 @@ const Card = ({
     dateText = 'Дата окончания';
   }
 
-  const clickableProps = {
-    onClick,
-    onMouseEnter: () => setIsHovered(true),
-    onMouseLeave: () => setIsHovered(false),
-  };
+  const clickableProps =
+    isNew || onClick
+      ? {
+          onClick,
+          onMouseEnter: () => setIsHovered(true),
+          onMouseLeave: () => setIsHovered(false),
+        }
+      : {};
 
   return (
     <div className={'card mt-2 ' + color} {...(onClick ? clickableProps : {})}>
