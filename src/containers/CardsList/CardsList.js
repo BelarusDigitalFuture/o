@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CardList.css';
+import './CardList.scss';
 import { useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,7 +56,7 @@ const CardsList = ({
   const tagList = cardsSet.map((x) => x.tags).flat();
   return (
     <>
-      <div className="section pb-5">
+      <div className="section outer">
         <div className="box">
           <div className="tabs mb-2">
             {isEvents || isPolls ? (

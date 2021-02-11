@@ -1,0 +1,8 @@
+@import 'node_modules/bulma/sass/utilities/mixins.sass' ;
+
+
+.outer {
+  @include mobile() {
+    padding: 1em 1em;
+  }
+}
