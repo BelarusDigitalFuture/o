@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import GenericPage from '../GenericPage/GenericPage';
 import DocumentCard from '../../DocumentCard';
-import { faBook, faFileImage } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook, faFileImage, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const docList = [
   { name: 'Устав ТС', type: '', icon: faBook },
@@ -14,6 +15,7 @@ const docList = [
 
 const DocumentsPage = () => {
   const [docType, setDocType] = useState('all');
+  const [filterString, setFilterString] = useState('');
 
   const getDocs = () => {
     if (docType === 'all') {
@@ -28,9 +30,14 @@ const DocumentsPage = () => {
         <p className="panel-heading">Полезные документы</p>
         <div className="panel-block">
           <p className="control has-icons-left">
-            <input className="input" type="text" disabled placeholder="Поиск пока недоступен :(" />
+            <input
+              className="input"
+              type="text"
+              placeholder="Поиск"
+              onChange={(e) => setFilterString(e.target.value)}
+            />
             <span className="icon is-left">
-              <i className="fas fa-search" aria-hidden="true" />
+              <FontAwesomeIcon icon={faSearch} />
             </span>
           </p>
         </div>
@@ -52,9 +59,11 @@ const DocumentsPage = () => {
           </a>
         </p>
 
-        {getDocs().map((x, i) => (
-          <DocumentCard key={i} name={x.name} icon={x.icon} />
-        ))}
+        {getDocs()
+          .filter((x) => x.name.toLowerCase().includes(filterString.toLowerCase()))
+          .map((x, i) => (
+            <DocumentCard key={i} name={x.name} icon={x.icon} />
+          ))}
       </nav>
     </GenericPage>
   );
