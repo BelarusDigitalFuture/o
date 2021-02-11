@@ -103,7 +103,7 @@ const CardsList = ({
             >
               <FontAwesomeIcon
                 className="aria-hidden has-text-primary-light"
-                size="2x"
+                size="lg"
                 icon={faPlus}
               />
             </button>
