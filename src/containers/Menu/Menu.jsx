@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Menu.css';
 import Menu from '../../components/Menu';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +14,9 @@ const menuElements = [
 ];
 
 const AppMenu = () => {
-  const [activeId, setActiveId] = useState(0);
+  const history = useHistory();
+  const currentUrl = '/' + history.location.pathname.split('/')[1];
+  const [activeId, setActiveId] = useState(menuElements.findIndex((x) => x.url === currentUrl));
   const [mobileOpened, setMobileOpened] = useState(false);
 
   const menuElementClickHandler = (id) => {
