@@ -7,6 +7,7 @@ const menuElements = [
   { name: 'Обсуждения', url: '/discussions' },
   { name: 'Голосования', url: '/polls' },
   { name: 'Встречи', url: '/events' },
+  { name: 'Контакты', url: '/contacts' },
 ];
 
 const AppMenu = () => {
