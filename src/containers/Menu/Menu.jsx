@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Menu from '../../components/Menu';
 
 const menuElements = [
@@ -10,7 +11,9 @@ const menuElements = [
 ];
 
 const AppMenu = () => {
-  const [activeId, setActiveId] = useState(0);
+  const history = useHistory();
+  const currentUrl = '/' + history.location.pathname.split('/')[1];
+  const [activeId, setActiveId] = useState(menuElements.findIndex((x) => x.url === currentUrl));
 
   const menuElementClickHandler = (id) => {
     setActiveId(id);
