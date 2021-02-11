@@ -11,23 +11,30 @@ import { setFlourishScript } from '../../../shared/service';
 
 const PollPage = () => {
   const [isAccept, setAccept] = useState(false);
-  const onAccept = () => {
-    setAccept(true);
-  };
   const { pollId } = useParams();
-  const { polls } = useContext(PollsContext);
+  const { dispatch, polls } = useContext(PollsContext);
+  const history = useHistory();
+
   const poll = polls.find((x) => x.id.toString() === pollId);
   if (!poll) {
     return <GenericPage />;
   }
-  const { header, date, author, text, isRadio, tags, pollData } = poll;
+  const onAccept = () => {
+    setAccept(true);
+  };
+  const сreateRepeatPoll = () => {
+    dispatch({ type: 'REPEAT_POLL', payload: poll });
+    history.push(`${window.location.pathname}`);
+  };
+
+  const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
   const isOpen = date.getTime() >= new Date().getTime();
-  const isSuccess = isOpen && pollData.results.some((x) => x > 50);
-  const history = useHistory();
+  const isSuccess = pollData.results.some((x) => x > 50);
+  const isFailed = userAmount * quorum > pollData.results.reduce((ac, cur) => ac + cur);
 
   let color = isOpen
     ? 'has-background-warning-light'
-    : isSuccess
+    : !isSuccess
     ? 'has-background-danger-light'
     : 'has-background-primary-light';
 
@@ -185,6 +192,13 @@ const PollPage = () => {
 
             {isAccept ? (
               <span className="has-text-weight-medium is-size-4">Ваш голос зачтен!</span>
+            ) : null}
+            {isFailed ? (
+              <footer className="card-footer">
+                <a className="button mt-2" onClick={сreateRepeatPoll}>
+                  Создать голосование повторно
+                </a>
+              </footer>
             ) : null}
           </div>
         </div>
