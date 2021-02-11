@@ -54,6 +54,7 @@ const defaultPolls = [
       discussionId: 0,
     },
     id: 0,
+    quorum: 0.5,
   },
   {
     header: 'Ремонт детской площадки',
@@ -70,6 +71,7 @@ const defaultPolls = [
       discussionId: 1613070770158,
     },
     id: 1613070912952,
+    quorum: 0.5,
   },
   {
     header: 'Празднуем новый год вместе',
@@ -86,6 +88,8 @@ const defaultPolls = [
       discussionId: 0,
     },
     id: 2,
+    userAmount: 100,
+    quorum: 0.5,
   },
   {
     header: 'А не поменять ли мне жену?',
@@ -97,10 +101,29 @@ const defaultPolls = [
     pollData: {
       question: 'Кого выбрать?',
       items: ['Людку из третьего', 'Соседа Игоря', 'Зинку с пятого'],
-      results: [1, 3, 12],
-      discussionId: 0,
+      results: [19, 35, 12],
+      discussionId: 1,
     },
     id: 3,
+    userAmount: 100,
+    quorum: 0.5,
+  },
+  {
+    header: 'Голосование за очень важный вопрос',
+    date: new Date(2020, 11, 31),
+    author: 'Председатель дома',
+    text: 'Чтож, давайте голосовать за очень важный вопрос!',
+    isRadio: true,
+    tags: ['официально', 'ремонт'],
+    pollData: {
+      question: 'Вопрос важный?',
+      items: ['Очень важный', 'Архи важный!'],
+      results: [14, 27],
+      discussionId: 1,
+    },
+    id: 4,
+    userAmount: 100,
+    quorum: 0.5,
   },
 ];
 
@@ -123,6 +146,29 @@ const reducer = (state, action) => {
             results: Array(action.poll.items.length).fill(0),
             discussionId: action.poll.discussionId || 0,
           },
+          quorum:
+            action.poll.quorum && action.poll.tags.includes('официально')
+              ? action.poll.quorum * 0.5
+              : !action.poll.quorum && action.poll.tags.includes('официально')
+              ? 0.5
+              : 1,
+        },
+      ];
+    case 'REPEAT_POLL':
+      return [
+        ...state.filter((e) => e.id !== action.payload.id),
+        {
+          header: `${action.payload.header} (ПОВТОРНО)`,
+          date: new Date(2021, 3, 10),
+          author: action.payload.author,
+          text: action.payload.text,
+          isRadio: !action.payload.isRadio || true,
+          tags: action.payload.tags,
+          isAccepted: action.payload.isAccepted || false,
+          pollData: action.payload.pollData,
+          id: Date.now(),
+          userAmount: action.payload.userAmount,
+          quorum: action.payload.quorum * 0.5,
         },
       ];
     default:

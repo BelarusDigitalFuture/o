@@ -3,7 +3,7 @@ import MenuItem from '../MenuItem';
 
 const Menu = (props) => {
   return (
-    <aside className="column menu-class menu is-2 is-block-mobile is-inline is-fullheight section is-static">
+    <>
       <figure className="image ">
         <img src="/logo.svg" />
       </figure>
@@ -22,7 +22,7 @@ const Menu = (props) => {
           />
         ))}
       </ul>
-    </aside>
+    </>
   );
 };
 

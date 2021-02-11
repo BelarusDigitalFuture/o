@@ -23,7 +23,7 @@ const AppContent = () => {
       <div>
         <div className="columns is-fullheight is-marginless">
           <AppMenu />
-          <div className="container column is-10">
+          <div className="container">
             <Switch>
               <Route path="/mydata">
                 <MyData />
