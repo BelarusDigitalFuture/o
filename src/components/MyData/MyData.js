@@ -15,8 +15,8 @@ const MyData = (props) => {
             <p className="mb-1">
               <strong>Юзер Юзерович</strong> <small>Председатель правления ТС</small>
             </p>
-            <p className="subtitle is-7 mb-1">Квартира №32</p>
-            <p className="subtitle is-7 ">Площадь (общая/жилая) - 75/68м²</p>
+            <p className="subtitle is-7 mb-1">Квартира №32 | Лицевой счет №76543687676</p>
+            <p className="subtitle is-7">Площадь (общая/жилая) - 75/68м²</p>
           </div>
         </div>
       </article>
