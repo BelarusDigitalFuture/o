@@ -1,3 +1,5 @@
 import Geocoder from './geocode';
 import Logger from './logger';
-export { Geocoder, Logger };
+import { isDateFuture } from './util';
+
+export { Geocoder, Logger, isDateFuture };

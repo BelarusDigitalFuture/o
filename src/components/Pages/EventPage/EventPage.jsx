@@ -1,11 +1,20 @@
 import React, { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import GenericPage from '../GenericPage/GenericPage';
-import { EventsContext } from '../../../shared/state';
-import { EventCard } from '../../../containers/Card';
+import { EventsContext, TopicsContext } from '../../../shared/state';
+import { EventCard, Tags, DetailAttribute } from '../../../containers/Card';
 import { Map, LocationMarker } from '../../../shared/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUsers,
+  faLocationArrow,
+  faEnvelopeOpenText,
+  faTags,
+  faUser,
+  faCalendar,
+  faArrowRight,
+} from '@fortawesome/free-solid-svg-icons';
+import { isDateFuture } from '../../../shared/service';
 
 const EventPage = () => {
   const { eventId } = useParams();
@@ -13,15 +22,37 @@ const EventPage = () => {
 
   const event = events.find((event) => event.id.toString() === eventId);
 
+  const { topics } = useContext(TopicsContext);
+  const topic = topics.find((topic) => topic.id === event.discussionId);
+  const history = useHistory();
+
   return (
     <GenericPage header={event.header}>
-      <EventCard {...event} />
-
       <div className="card">
-        <div className="column">
-          <FontAwesomeIcon icon={faLocationArrow}></FontAwesomeIcon>
-          <span className="mx-2">{event.address}</span>
-        </div>
+        <DetailAttribute>
+          <div className="is-flex is-align-items-center">
+            <span className={`tag ${isDateFuture(event.date) ? 'is-info' : 'is-success'}`}>
+              {isDateFuture(event.date) ? 'Грядущее' : 'Завершенное'}
+            </span>
+            {topic && (
+              <button
+                className="ml-5 button is-small"
+                onClick={() => history.push(`/discussions/${topic.id}`)}
+              >
+                <span className="mr-2">Перейти к обсуждению</span>
+                <FontAwesomeIcon icon={faArrowRight} />
+              </button>
+            )}
+            {!topic && <span className="ml-5 tag is-light">{'Обсуждение не создавалось'}</span>}
+          </div>
+        </DetailAttribute>
+        <DetailAttribute icon={faUser}>{event.author}</DetailAttribute>
+        <DetailAttribute icon={faCalendar}>{event.date.toLocaleString()}</DetailAttribute>
+        <DetailAttribute icon={faTags}>
+          <Tags tags={event.tags} />
+        </DetailAttribute>
+        <DetailAttribute icon={faEnvelopeOpenText}>{event.text}</DetailAttribute>
+        <DetailAttribute icon={faLocationArrow}>{event.address}</DetailAttribute>
         <Map center={event.position}>
           {event.position && <LocationMarker position={event.position} />}
         </Map>

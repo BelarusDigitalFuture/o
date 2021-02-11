@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { isDateFuture } from '../../shared/service';
 
 const CardsList = ({
   data,
@@ -29,8 +30,8 @@ const CardsList = ({
   let cardsSet;
   if (isPolls || isEvents) {
     cardsSet = showOpen
-      ? data.filter((x) => x.date.getTime() >= new Date().getTime())
-      : data.filter((x) => x.date.getTime() < new Date().getTime());
+      ? data.filter((card) => isDateFuture(card.date))
+      : data.filter((card) => !isDateFuture(card.date));
     cardsSet = cardsSet.sort((x, y) => x.date.getTime() - y.date.getTime());
   } else {
     cardsSet = data.sort((x, y) => y.date.getTime() - x.date.getTime());

@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '../Card';
+import { Tags } from '..';
 
 const defaulColor = 'has-background-grey-lighter';
 
@@ -20,11 +21,7 @@ const BaseEntityCard = (props) => {
       <p className="subtitle is-7 mb-1">
         Автор: {author} | {dateText}: {date.toLocaleDateString()}
       </p>
-      {tags.map((tag, i) => (
-        <span key={i} className="tag is-info is-light mr-1">
-          #{tag}
-        </span>
-      ))}
+      <Tags tags={tags} />
       {children}
     </Card>
   );

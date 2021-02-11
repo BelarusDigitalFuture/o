@@ -40,7 +40,7 @@ const defaultEvents = [
     position: { lat: 53.85610142832483, lng: 27.453454495887502 },
     tags: ['официально', 'наш дом'],
     eventData: { peopleGoing: 24 },
-    discussionId: 0,
+    discussionId: 1612881007433,
   },
 ];
 
