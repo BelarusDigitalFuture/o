@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
+import './AppContent.css';
 import CardsList from '../CardsList/CardsList';
 import DiscussionForm from '../../components/DiscussionForm';
 import DiscussionPage from '../../components/Pages/DiscussionPage/DiscussionPage';
@@ -21,7 +21,10 @@ const AppContent = () => {
   return (
     <Router>
       <div>
-        <div className="columns is-fullheight is-marginless">
+        <div
+          className="columns is-fullheight is-marginless background"
+          style={{ backgroundImage: 'url(/background.jpg)' }}
+        >
           <AppMenu />
           <div className="container">
             <Switch>
