@@ -17,6 +17,7 @@ const defaultPolls = [
       discussionId: 0,
     },
     id: 0,
+    quorum: 0.5,
   },
   {
     header: 'Ремонт детской площадки',
@@ -33,6 +34,7 @@ const defaultPolls = [
       discussionId: 1612881007433,
     },
     id: 1,
+    quorum: 0.5,
   },
   {
     header: 'Празднуем новый год вместе',
@@ -73,12 +75,12 @@ const defaultPolls = [
     header: 'Голосование за очень важный вопрос',
     date: new Date(2020, 11, 31),
     author: 'Председатель дома',
-    text: 'Должны проголосовать не менее 50% жильцов',
+    text: 'Чтож, давайте голосовать за очень важный вопрос!',
     isRadio: true,
-    tags: ['неофициально', 'праздник', 'дети'],
+    tags: ['официально', 'ремонт'],
     pollData: {
-      question: 'Вы согласны?',
-      items: ['Да', 'Нет'],
+      question: 'Вопрос важный?',
+      items: ['Очень важный', 'Архи важный!'],
       results: [14, 27],
       discussionId: 1,
     },
@@ -107,23 +109,12 @@ const reducer = (state, action) => {
             results: Array(action.poll.items.length).fill(0),
             discussionId: action.poll.discussionId || 0,
           },
-        },
-      ];
-    case 'REPEAT_POLL':
-      return [
-        ...state.filter((e) => e.id !== action.payload.id),
-        {
-          header: `${action.payload.header} (ПОВТОРНО)`,
-          date: new Date(2021, 3, 10),
-          author: action.payload.author,
-          text: action.payload.text,
-          isRadio: !action.payload.isRadio || true,
-          tags: action.payload.tags,
-          isAccepted: action.payload.isAccepted || false,
-          pollData: action.payload.pollData,
-          id: Date.now(),
-          userAmount: action.payload.userAmount,
-          quorum: action.payload.quorum * 0.5,
+          quorum:
+            action.poll.quorum && action.poll.tags.includes('официально')
+              ? action.poll.quorum * 0.5
+              : !action.poll.quorum && action.poll.tags.includes('официально')
+              ? 0.5
+              : 1,
         },
       ];
     default:

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +14,7 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
   const [filterHeaderString, setFilterHeaderString] = useState('');
   const [filterDate, setFilterDate] = useState('');
   const [filterTags, setFilterTags] = useState([]);
+  const history = useHistory();
 
   const applyFilters = (cardsSet) =>
     cardsSet.filter(
