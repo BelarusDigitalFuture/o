@@ -1,7 +1,9 @@
 .background {
   background: no-repeat;
+  -webkit-box-shadow: inset 0px 0px 400px 150px rgba(255, 255, 255, 0.808);
+  box-shadow: inset 0px 0px 400px 150px rgba(255, 255, 255, 0.808);
   -moz-background-size: 100% 100%;
   -webkit-background-size: 100% 100%;
   -o-background-size: 100% 100%;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
