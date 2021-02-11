@@ -117,6 +117,23 @@ const reducer = (state, action) => {
               : 1,
         },
       ];
+    case 'REPEAT_POLL':
+      return [
+        ...state.filter((e) => e.id !== action.payload.id),
+        {
+          header: `${action.payload.header} (ПОВТОРНО)`,
+          date: new Date(2021, 3, 10),
+          author: action.payload.author,
+          text: action.payload.text,
+          isRadio: !action.payload.isRadio || true,
+          tags: action.payload.tags,
+          isAccepted: action.payload.isAccepted || false,
+          pollData: action.payload.pollData,
+          id: Date.now(),
+          userAmount: action.payload.userAmount,
+          quorum: action.payload.quorum * 0.5,
+        },
+      ];
     default:
       return state;
   }
