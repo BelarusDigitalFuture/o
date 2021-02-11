@@ -3,7 +3,11 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import GenericPage from '../GenericPage/GenericPage';
 import { useParams, useHistory } from 'react-router-dom';
-import { PollsContext } from '../../../shared/state';
+import { PollsContext, TopicsContext } from '../../../shared/state';
+import { DetailAttribute } from '../../../containers/Card';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { setFlourishScript } from '../../../shared/service';
 
 const PollPage = () => {
   const [isAccept, setAccept] = useState(false);
@@ -18,7 +22,7 @@ const PollPage = () => {
   }
   const { header, date, author, text, isRadio, tags, pollData } = poll;
   const isOpen = date.getTime() >= new Date().getTime();
-  const isSuccess = pollData.results.some((x) => x > 50);
+  const isSuccess = isOpen && pollData.results.some((x) => x > 50);
   const history = useHistory();
 
   let color = isOpen
@@ -26,6 +30,18 @@ const PollPage = () => {
     : isSuccess
     ? 'has-background-danger-light'
     : 'has-background-primary-light';
+
+  const { topics } = useContext(TopicsContext);
+  const topic = topics.find((topic) => topic.id === pollData?.discussionId);
+
+  const [resultSummaryMode, setResultSummaryMode] = useState(true);
+  const switchResultMode = () => {
+    if (resultSummaryMode) {
+      setFlourishScript();
+    }
+    setResultSummaryMode(!resultSummaryMode);
+  };
+
   return (
     <GenericPage>
       {' '}
@@ -35,6 +51,22 @@ const PollPage = () => {
             <div className="media mb-2">
               <div className="media-content">
                 <p className="title is-4 mb-2">{header}</p>
+                <DetailAttribute>
+                  <div className="is-flex is-align-items-center">
+                    {topic && (
+                      <button
+                        className="ml-5 button is-small"
+                        onClick={() => history.push(`/discussions/${topic.id}`)}
+                      >
+                        <span className="mr-2">Перейти к обсуждению</span>
+                        <FontAwesomeIcon icon={faArrowRight} />
+                      </button>
+                    )}
+                    {!topic && (
+                      <span className="ml-5 tag is-light">{'Обсуждение не создавалось'}</span>
+                    )}
+                  </div>
+                </DetailAttribute>
                 <div className="mb-2">
                   <p className="subtitle is-6">Автор: {author}</p>
                 </div>
@@ -109,22 +141,44 @@ const PollPage = () => {
               <>
                 <section className="section p-0 has-background-link-light">
                   {' '}
-                  <div className="panel-heading">
-                    <h3 className="panel-title">Результаты голосования</h3>
-                  </div>
-                  <div>
-                    <h3 className="panel-title p-4">{pollData.question}</h3>
-                  </div>
-                  <div className="control p-4">
-                    {pollData.items.map((x, i) => (
-                      <h3 className="panel-title" key={i}>
-                        {x}:{' '}
-                        <span className="is-size-5 has-text-weight-medium pl-2">
-                          {pollData.results[i]}
-                        </span>
-                      </h3>
-                    ))}
-                  </div>
+                  {resultSummaryMode && (
+                    <div className="panel-heading">
+                      <h3 className="panel-title">Результаты голосования</h3>
+                    </div>
+                  )}
+                  {!resultSummaryMode && (
+                    <div>
+                      <button className="button" onClick={switchResultMode}>
+                        <FontAwesomeIcon className="icon" size={'xs'} icon={faArrowLeft} />
+                        <span>Основные результаты</span>
+                      </button>
+                    </div>
+                  )}
+                  {resultSummaryMode && (
+                    <>
+                      <div>
+                        <h3 className="panel-title p-4">{pollData.question}</h3>
+                      </div>
+                      <div className="control p-4">
+                        {pollData.items.map((x, i) => (
+                          <h3 className="panel-title" key={i}>
+                            {x}:{' '}
+                            <span className="is-size-5 has-text-weight-medium pl-2">
+                              {pollData.results[i]}
+                            </span>
+                          </h3>
+                        ))}
+                      </div>
+                      <button className="button" onClick={switchResultMode}>
+                        <span>Подробные результаты</span>
+                        <FontAwesomeIcon className="icon" size={'xs'} icon={faArrowRight} />
+                      </button>
+                    </>
+                  )}
+                  <div
+                    className={`flourish-embed flourish-chart ${resultSummaryMode && 'is-hidden'}`}
+                    data-src="visualisation/5257910"
+                  ></div>
                 </section>
               </>
             )}

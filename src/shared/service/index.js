@@ -1,3 +1,6 @@
 import Geocoder from './geocode';
 import Logger from './logger';
-export { Geocoder, Logger };
+import { isDateFuture } from './util';
+import { setFlourishScript } from './flourish';
+
+export { Geocoder, Logger, isDateFuture, setFlourishScript };

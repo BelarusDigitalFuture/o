@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
+import './CardList.css';
 import { useHistory } from 'react-router-dom';
 import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import Card from '../Card';
+import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { isDateFuture } from '../../shared/service';
 
-const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }) => {
+const CardsList = ({
+  data,
+  isTopics = false,
+  isEvents = false,
+  isPolls = false,
+  cardComponent: CardComponent,
+}) => {
   const [showOpen, setShowOpen] = useState(true);
   const [isFilterShowed, setIsFilterShowed] = useState(false);
   const [filterHeaderString, setFilterHeaderString] = useState('');
@@ -24,8 +30,8 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
   let cardsSet;
   if (isPolls || isEvents) {
     cardsSet = showOpen
-      ? data.filter((x) => x.date.getTime() >= new Date().getTime())
-      : data.filter((x) => x.date.getTime() < new Date().getTime());
+      ? data.filter((card) => isDateFuture(card.date))
+      : data.filter((card) => !isDateFuture(card.date));
     cardsSet = cardsSet.sort((x, y) => x.date.getTime() - y.date.getTime());
   } else {
     cardsSet = data.sort((x, y) => y.date.getTime() - x.date.getTime());
@@ -80,26 +86,29 @@ const CardsList = ({ data, isTopics = false, isEvents = false, isPolls = false }
               hasDatePicker={!isTopics}
             />
           </div>
-          {showOpen ? (
-            <Card
-              id="new"
-              header={<FontAwesomeIcon className="aria-hidden" size="2x" icon={faPlusSquare} />}
-              isNew
-              onClick={() => history.push(`${window.location.pathname}/new`)}
-            />
-          ) : (
-            ''
-          )}
-          {applyFilters(cardsSet).map((x, i) => (
-            <Card
+          {applyFilters(cardsSet).map((card, i) => (
+            <CardComponent
               key={i}
-              {...x}
+              {...card}
               isTopic={isTopics}
               isEvent={isEvents}
               isPoll={isPolls}
-              onClick={() => history.push(`${window.location.pathname}/${x.id}`)}
+              onClick={() => history.push(`${window.location.pathname}/${card.id}`)}
             />
           ))}
+          {showOpen && (
+            <button
+              className="button is-rounded add-button is-success"
+              title="Добавить"
+              onClick={() => history.push(`${window.location.pathname}/new`)}
+            >
+              <FontAwesomeIcon
+                className="aria-hidden has-text-primary-light"
+                size="lg"
+                icon={faPlus}
+              />
+            </button>
+          )}
         </div>
       </div>
     </>
