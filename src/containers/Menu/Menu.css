@@ -1,0 +1,12 @@
+.modal-menu-content {
+  height: 100%;
+}
+
+.modal-menu-close {
+  background: inherit;
+}
+
+.app-navbar-burger {
+  top: 10px;
+  right: 10px;
+}

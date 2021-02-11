@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, useLocation } from 'react-router-dom';
 import { Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { AppForm } from '../../shared';
@@ -25,6 +25,7 @@ const PollForm = () => {
     dispatch({ type: 'ADD_POLL', poll: { ...values } });
     history.push('/polls');
   };
+  const location = useLocation();
 
   const validationSchema = Yup.object({
     header: Yup.string()
@@ -38,18 +39,18 @@ const PollForm = () => {
       .min(2, 'Должно быть как минимум два варианта ответа')
       .required('Поле обязательно для заполнения'),
   });
-
   return (
     <GenericPage>
       <Formik
         initialValues={{
-          tags: [],
-          header: '',
-          text: '',
+          tags: location.state?.tags || [],
+          header: location.state ? `${location.state.header} (ПОВТОРНО)` : '',
+          text: location.state?.text || '',
           date: '',
-          question: '',
-          items: [],
+          question: location.state?.pollData.question || '',
+          items: location.state?.pollData.items || [],
           discussionId: topicId,
+          quorum: location.state?.quorum || null,
         }}
         validationSchema={validationSchema}
         onSubmit={handleFormSubmit}
