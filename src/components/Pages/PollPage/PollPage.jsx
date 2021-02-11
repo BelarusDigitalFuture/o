@@ -22,12 +22,6 @@ const PollPage = () => {
   const onAccept = () => {
     setAccept(true);
   };
-  // const сreateRepeatPoll = () => {
-  //   history.push({
-  //     pathname: '/polls/new',
-  //     state: poll,
-  //   });
-  // };
 
   const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
   const isOpen = date.getTime() >= new Date().getTime();
