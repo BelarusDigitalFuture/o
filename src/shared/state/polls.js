@@ -17,7 +17,7 @@ const defaultPolls = [
       results: [13, 16, 21, 11],
       discussionId: 0,
     },
-    id: 1613067113898,
+    id: 1613070700093,
   },
   {
     header: 'Новый лифт за счет ремонтного фонда',
@@ -67,9 +67,9 @@ const defaultPolls = [
       question: 'Что устанавливаем?',
       items: ['Пилон', 'Бар', 'Новые качели'],
       results: [11, 32, 53],
-      discussionId: 1612881007433,
+      discussionId: 1613070770158,
     },
-    id: 1,
+    id: 1613070912952,
   },
   {
     header: 'Празднуем новый год вместе',
