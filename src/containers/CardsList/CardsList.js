@@ -20,6 +20,7 @@ const CardsList = ({
   const [filterHeaderString, setFilterHeaderString] = useState('');
   const [filterDate, setFilterDate] = useState('');
   const [filterTags, setFilterTags] = useState([]);
+  const history = useHistory();
 
   const applyFilters = (cardsSet) =>
     cardsSet.filter(
