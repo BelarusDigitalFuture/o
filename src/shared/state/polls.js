@@ -39,6 +39,8 @@ const defaultPolls = [
       discussionId: 1613067128811,
     },
     id: 1613067113898,
+    userAmount: 100,
+    quorum: 0.5,
   },
   {
     header: 'Меняем унитазы',
@@ -55,6 +57,7 @@ const defaultPolls = [
     },
     id: 0,
     quorum: 0.5,
+    userAmount: 100,
   },
   {
     header: 'Ремонт детской площадки',
@@ -72,6 +75,7 @@ const defaultPolls = [
     },
     id: 1613070912952,
     quorum: 0.5,
+    userAmount: 100,
   },
   {
     header: 'Празднуем новый год вместе',
