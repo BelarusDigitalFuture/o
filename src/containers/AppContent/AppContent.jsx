@@ -11,7 +11,7 @@ import MyData from '../../components/MyData';
 import AppMenu from '../Menu/Menu';
 import PollPage from '../../components/Pages/PollPage';
 import { PollsContext, TopicsContext, EventsContext } from '../../shared/state';
-import { EventPage, ContactsPage } from '../../components/Pages';
+import { EventPage, ContactsPage, DocumentsPage } from '../../components/Pages';
 import { EventCard, DiscussionCard, PollCard } from '../Card';
 
 const AppContent = () => {
@@ -57,6 +57,9 @@ const AppContent = () => {
               </Route>
               <Route path="/contacts">
                 <ContactsPage />
+              </Route>
+              <Route path="/docs">
+                <DocumentsPage />
               </Route>
               <Route path="/">
                 <MainPage />
