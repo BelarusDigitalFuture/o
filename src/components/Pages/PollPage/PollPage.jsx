@@ -11,23 +11,26 @@ import { setFlourishScript } from '../../../shared/service';
 
 const PollPage = () => {
   const [isAccept, setAccept] = useState(false);
-  const onAccept = () => {
-    setAccept(true);
-  };
   const { pollId } = useParams();
   const { polls } = useContext(PollsContext);
+  const history = useHistory();
+
   const poll = polls.find((x) => x.id.toString() === pollId);
   if (!poll) {
     return <GenericPage />;
   }
-  const { header, date, author, text, isRadio, tags, pollData } = poll;
+  const onAccept = () => {
+    setAccept(true);
+  };
+
+  const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
   const isOpen = date.getTime() >= new Date().getTime();
-  const isSuccess = isOpen && pollData.results.some((x) => x > 50);
-  const history = useHistory();
+  const isSuccess = pollData.results.some((x) => x > 50);
+  const isFailed = userAmount * quorum > pollData.results.reduce((ac, cur) => ac + cur);
 
   let color = isOpen
     ? 'has-background-warning-light'
-    : isSuccess
+    : !isSuccess
     ? 'has-background-danger-light'
     : 'has-background-primary-light';
 
@@ -90,6 +93,12 @@ const PollPage = () => {
             <div className="content">
               <hr />
               {text}
+              {tags.includes('официально') ? (
+                <p className="subtitle is-7 mt-2 mb-2">
+                  Для того, чтобы голосование состоялось должны проголосовать {quorum * 100}%
+                  жильцов
+                </p>
+              ) : null}
             </div>
             {isOpen ? (
               <section className="section p-0 has-background-link-light">
@@ -179,12 +188,31 @@ const PollPage = () => {
                     className={`flourish-embed flourish-chart ${resultSummaryMode && 'is-hidden'}`}
                     data-src="visualisation/5257910"
                   ></div>
+                  {tags.includes('официально') ? (
+                    <p className="subtitle is-7 p-3">Проголосовало менее {quorum * 100}% жильцов</p>
+                  ) : null}
                 </section>
               </>
             )}
 
             {isAccept ? (
               <span className="has-text-weight-medium is-size-4">Ваш голос зачтен!</span>
+            ) : null}
+            {isFailed ? (
+              <footer className="card-footer">
+                <a
+                  style={{ height: 'auto', whiteSpace: 'normal' }}
+                  className="button mt-2"
+                  onClick={() => {
+                    history.push({
+                      pathname: '/polls/new',
+                      state: poll,
+                    });
+                  }}
+                >
+                  Создать голосование повторно
+                </a>
+              </footer>
             ) : null}
           </div>
         </div>

@@ -4,7 +4,7 @@ export const TagsContext = createContext();
 
 const defaultTags = [
   { title: 'прогулка' },
-  { title: 'официальная' },
+  { title: 'официально' },
   { title: 'дети' },
   { title: 'спорт' },
 ];
