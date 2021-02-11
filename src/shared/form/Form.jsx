@@ -6,7 +6,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 const AppForm = ({ buttonText = 'Создать', children }) => {
   return (
     <>
-      <Form>
+      <Form className="has-background-white p-3">
         {children}
         <button className="button is-success" type="submit">
           <span className="icon is-small">

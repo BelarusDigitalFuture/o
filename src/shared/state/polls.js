@@ -18,6 +18,7 @@ const defaultPolls = [
       discussionId: 0,
     },
     id: 1613070700093,
+    quorum: 0.5,
   },
   {
     header: 'Новый лифт за счет ремонтного фонда',
@@ -39,6 +40,7 @@ const defaultPolls = [
       discussionId: 1613067128811,
     },
     id: 1613067113898,
+    quorum: 0.5,
   },
   {
     header: 'Меняем унитазы',
@@ -152,23 +154,6 @@ const reducer = (state, action) => {
               : !action.poll.quorum && action.poll.tags.includes('официально')
               ? 0.5
               : 1,
-        },
-      ];
-    case 'REPEAT_POLL':
-      return [
-        ...state.filter((e) => e.id !== action.payload.id),
-        {
-          header: `${action.payload.header} (ПОВТОРНО)`,
-          date: new Date(2021, 3, 10),
-          author: action.payload.author,
-          text: action.payload.text,
-          isRadio: !action.payload.isRadio || true,
-          tags: action.payload.tags,
-          isAccepted: action.payload.isAccepted || false,
-          pollData: action.payload.pollData,
-          id: Date.now(),
-          userAmount: action.payload.userAmount,
-          quorum: action.payload.quorum * 0.5,
         },
       ];
     default:
