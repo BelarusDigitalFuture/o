@@ -1,0 +1,15 @@
+@import 'node_modules/bulma/sass/utilities/mixins.sass' ;
+
+.add-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  height: 60px;
+  width: 60px;
+}
+
+.outer {
+  @include mobile() {
+    padding: 1em 0;
+  }
+}

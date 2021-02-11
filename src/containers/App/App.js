@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './App.sass';
 import { TagsProvider, TopicsProvider, PollsProvider, EventsProvider } from '../../shared/state';
 import AppContent from '../AppContent/AppContent';
 
