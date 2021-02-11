@@ -4,9 +4,15 @@ export const TagsContext = createContext();
 
 const defaultTags = [
   { title: 'прогулка' },
-  { title: 'официальная' },
+  { title: 'официально' },
+  { title: 'неофициально' },
   { title: 'дети' },
   { title: 'спорт' },
+  { title: 'ремонт' },
+  { title: 'наш дом' },
+  { title: 'ремонтный фонд' },
+  { title: 'музыка' },
+  { title: 'концерт' },
 ];
 
 const reducer = (state, action) => {
