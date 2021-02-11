@@ -12,7 +12,7 @@ import { setFlourishScript } from '../../../shared/service';
 const PollPage = () => {
   const [isAccept, setAccept] = useState(false);
   const { pollId } = useParams();
-  const { dispatch, polls } = useContext(PollsContext);
+  const { polls } = useContext(PollsContext);
   const history = useHistory();
 
   const poll = polls.find((x) => x.id.toString() === pollId);
@@ -22,10 +22,12 @@ const PollPage = () => {
   const onAccept = () => {
     setAccept(true);
   };
-  const сreateRepeatPoll = () => {
-    dispatch({ type: 'REPEAT_POLL', payload: poll });
-    history.push('/polls');
-  };
+  // const сreateRepeatPoll = () => {
+  //   history.push({
+  //     pathname: '/polls/new',
+  //     state: poll,
+  //   });
+  // };
 
   const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
   const isOpen = date.getTime() >= new Date().getTime();
@@ -157,9 +159,14 @@ const PollPage = () => {
                 <section className="section p-0 has-background-link-light">
                   {' '}
                   {resultSummaryMode && (
-                    <div className="panel-heading">
-                      <h3 className="panel-title">Результаты голосования</h3>
-                    </div>
+                    <>
+                      <div className="panel-heading">
+                        <h3 className="panel-title">Результаты голосования</h3>
+                      </div>
+                      <div>
+                        <h3 className="panel-title p-4">{pollData.question}</h3>
+                      </div>
+                    </>
                   )}
                   {!resultSummaryMode && (
                     <div>
@@ -206,7 +213,16 @@ const PollPage = () => {
             ) : null}
             {isFailed ? (
               <footer className="card-footer">
-                <a className="button mt-2" onClick={сreateRepeatPoll}>
+                <a
+                  style={{ height: 'auto', whiteSpace: 'normal' }}
+                  className="button mt-2"
+                  onClick={() => {
+                    history.push({
+                      pathname: '/polls/new',
+                      state: poll,
+                    });
+                  }}
+                >
                   Создать голосование повторно
                 </a>
               </footer>
