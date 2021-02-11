@@ -75,21 +75,12 @@ const defaultPolls = [
     header: 'Голосование за очень важный вопрос',
     date: new Date(2020, 11, 31),
     author: 'Председатель дома',
-<<<<<<< HEAD
     text: 'Чтож, давайте голосовать за очень важный вопрос!',
     isRadio: true,
     tags: ['официально', 'ремонт'],
     pollData: {
       question: 'Вопрос важный?',
       items: ['Очень важный', 'Архи важный!'],
-=======
-    text: 'Должны проголосовать не менее 50% жильцов',
-    isRadio: true,
-    tags: ['неофициально', 'праздник', 'дети'],
-    pollData: {
-      question: 'Вы согласны?',
-      items: ['Да', 'Нет'],
->>>>>>> a880bb7... fix: rebase conflict
       results: [14, 27],
       discussionId: 1,
     },
