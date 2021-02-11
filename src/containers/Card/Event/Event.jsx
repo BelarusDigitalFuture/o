@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from '../Card';
+import { BaseEntityCard } from '..';
 
 export default function Event({ isTopic, isEvent, isPoll, ...props }) {
-  return <Card isEvent {...props} />;
+  return <BaseEntityCard dateText="Дата проведения" isEvent {...props} />;
 }
