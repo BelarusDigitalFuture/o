@@ -81,13 +81,6 @@ const PollPage = () => {
                 <p className="subtitle is-7 mt-2 mb-2">
                   Дата окончания : {date.toLocaleDateString()}
                 </p>
-                {pollData.discussionId ? (
-                  <a onClick={() => history.push(`/discussions/${pollData.discussionId}`)}>
-                    Открыть обсуждение
-                  </a>
-                ) : (
-                  ''
-                )}
               </div>
             </div>
             <div className="content">
