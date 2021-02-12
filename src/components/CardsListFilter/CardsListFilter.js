@@ -15,6 +15,8 @@ const CardsListFilter = ({
 }) => {
   const customInput = <input className="input" type="search" />;
 
+  const uniqueTags = tags.filter((val, ind, self) => self.indexOf(val) === ind);
+
   return (
     <div className="box">
       <div className="columns">
@@ -40,7 +42,7 @@ const CardsListFilter = ({
       <div className="columns">
         <div className="column ">
           <Select
-            options={tags.map((x) => ({ label: `#${x}`, value: x }))}
+            options={uniqueTags.map((x) => ({ label: `#${x}`, value: x }))}
             isMulti
             placeholder="Теги"
             onChange={onTagsChange}
