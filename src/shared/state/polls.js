@@ -18,6 +18,8 @@ const defaultPolls = [
       discussionId: 0,
     },
     id: 1613070700093,
+    quorum: 0.5,
+    isUserVoted: false,
   },
   {
     header: 'Новый лифт за счет ремонтного фонда',
@@ -41,6 +43,7 @@ const defaultPolls = [
     id: 1613067113898,
     userAmount: 100,
     quorum: 0.5,
+    isUserVoted: false,
   },
   {
     header: 'Меняем унитазы',
@@ -58,6 +61,7 @@ const defaultPolls = [
     id: 0,
     quorum: 0.5,
     userAmount: 100,
+    isUserVoted: false,
   },
   {
     header: 'Ремонт детской площадки',
@@ -156,25 +160,19 @@ const reducer = (state, action) => {
               : !action.poll.quorum && action.poll.tags.includes('официально')
               ? 0.5
               : 1,
+          isUserVoted: false,
         },
       ];
-    case 'REPEAT_POLL':
-      return [
-        ...state.filter((e) => e.id !== action.payload.id),
-        {
-          header: `${action.payload.header} (ПОВТОРНО)`,
-          date: new Date(2021, 3, 10),
-          author: action.payload.author,
-          text: action.payload.text,
-          isRadio: !action.payload.isRadio || true,
-          tags: action.payload.tags,
-          isAccepted: action.payload.isAccepted || false,
-          pollData: action.payload.pollData,
-          id: Date.now(),
-          userAmount: action.payload.userAmount,
-          quorum: action.payload.quorum * 0.5,
-        },
-      ];
+    case 'CHECK_USER_VOTED':
+      return state.map((e) => {
+        if (e.id === action.payload) {
+          const newE = { ...e };
+          newE.isUserVoted = true;
+          return newE;
+        } else {
+          return e;
+        }
+      });
     default:
       return state;
   }
