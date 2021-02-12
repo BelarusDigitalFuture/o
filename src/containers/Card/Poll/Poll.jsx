@@ -1,13 +1,6 @@
 import React from 'react';
 import { BaseEntityCard } from '..';
-
-const isPollCompleted = (results) => {
-  return results.some((x) => x > 50);
-};
-
-const isPollOpened = (date) => {
-  return date.getTime() >= new Date().getTime();
-};
+import { isPollCompleted, isPollOpened } from '../../../shared/state/polls';
 
 const colors = {
   isOpen: 'has-background-warning',
@@ -16,11 +9,11 @@ const colors = {
 };
 
 const PollCard = (props) => {
-  const { date, pollData } = props;
+  const { date, pollData, userAmount, quorum } = props;
   let colorClassName;
   if (isPollOpened(date)) {
     colorClassName = colors.isOpen;
-  } else if (isPollCompleted(pollData?.results)) {
+  } else if (isPollCompleted({ pollData, quorum, userAmount, date })) {
     colorClassName = colors.completed;
   } else {
     colorClassName = colors.notCompleted;

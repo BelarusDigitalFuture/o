@@ -186,4 +186,16 @@ const PollsProvider = ({ children }) => {
   return <PollsContext.Provider value={{ polls, dispatch }}>{children}</PollsContext.Provider>;
 };
 
+export const isPollOpened = (date) => {
+  return date.getTime() >= new Date().getTime();
+};
+
+export const countVotesSum = (pollData) => {
+  return pollData.results.reduce((ac, cur) => ac + cur);
+};
+
+export const isPollCompleted = ({ pollData, quorum, userAmount, date }) => {
+  return !isPollOpened(date) && userAmount * quorum <= countVotesSum(pollData);
+};
+
 export default PollsProvider;

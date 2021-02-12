@@ -4,18 +4,136 @@ import { useState } from 'react';
 import GenericPage from '../GenericPage/GenericPage';
 import { useParams, useHistory } from 'react-router-dom';
 import { PollsContext, TopicsContext } from '../../../shared/state';
-import { DetailAttribute } from '../../../containers/Card';
+import { DetailAttribute, Tags } from '../../../containers/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRight,
+  faArrowLeft,
+  faUser,
+  faCalendar,
+  faTags,
+  faEnvelopeOpenText,
+  faExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 import { setFlourishScript } from '../../../shared/service';
 import chart from './poll-results.png';
+import { isPollOpened, isPollCompleted } from '../../../shared/state/polls';
+
+const types = {
+  OPEN: 'open',
+  SUCCESS: 'success',
+  FAILED: 'failed',
+};
+
+const typesData = {
+  [types.OPEN]: { color: 'has-background-warning-light', text: 'Открытое' },
+  [types.SUCCESS]: { color: 'has-background-primary-light', text: 'Завершенное' },
+  [types.FAILED]: { color: 'has-background-danger has-text-light', text: 'Несостоявшееся' },
+};
+
+const isOfficial = (tags) => tags.includes('официально');
+const getType = (poll) => {
+  const { pollData, quorum, userAmount, date } = poll;
+  if (isPollOpened(poll.date)) return types.OPEN;
+  if (isPollCompleted({ pollData, quorum, userAmount, date })) return types.SUCCESS;
+  return types.FAILED;
+};
+
+const RadioChoice = ({ text, disabled }) => {
+  return (
+    <label className="radio" style={{ width: '100%' }}>
+      <input type="radio" name="answer" disabled={disabled} />
+      <span className="ml-2">{text}</span>
+    </label>
+  );
+};
+
+const CheckboxChoice = ({ text, disabled }) => {
+  return (
+    <label className="checkbox mr-2" style={{ width: '100%' }}>
+      <input type="checkbox" disabled={disabled} />
+      <span className="ml-2">{text}</span>
+    </label>
+  );
+};
+
+const OpenedPoll = ({ pollData, isAccept, isRadio }) => {
+  return (
+    <section className="section p-0 has-background-link-light">
+      <div className="panel-heading">
+        <h3 className="panel-title">Голосование</h3>
+      </div>
+      <div>
+        <h3 className="panel-title p-4">{pollData.question}</h3>
+      </div>
+      <div className="control p-4 panel">
+        {pollData.items.map((item, i) =>
+          isRadio ? (
+            <a className="panel-block">
+              <RadioChoice text={item} key={i} disabled={isAccept} />
+            </a>
+          ) : (
+            <a className="panel-block">
+              <CheckboxChoice text={item} key={i} disabled={isAccept} />
+            </a>
+          ),
+        )}
+      </div>
+    </section>
+  );
+};
+
+const NotOpenedPoll = ({ resultSummaryMode, pollData, quorum, tags, switchResultMode }) => {
+  return (
+    <section className="section p-0 has-background-link-light">
+      {' '}
+      {resultSummaryMode && (
+        <div className="panel-heading">
+          <h3 className="panel-title">Результаты голосования</h3>
+        </div>
+      )}
+      {!resultSummaryMode && (
+        <div>
+          <button className="button" onClick={switchResultMode}>
+            <FontAwesomeIcon className="icon" size={'xs'} icon={faArrowLeft} />
+            <span>Основные результаты</span>
+          </button>
+        </div>
+      )}
+      {resultSummaryMode && (
+        <>
+          <div>
+            <h3 className="panel-title p-4">{pollData.question}</h3>
+          </div>
+          <div className="control p-4">
+            {pollData.items.map((x, i) => (
+              <h3 className="panel-title" key={i}>
+                {x}:{' '}
+                <span className="is-size-5 has-text-weight-medium pl-2">{pollData.results[i]}</span>
+              </h3>
+            ))}
+          </div>
+          <button className="button" onClick={switchResultMode}>
+            <span>Подробные результаты</span>
+            <FontAwesomeIcon className="icon" size={'xs'} icon={faArrowRight} />
+          </button>
+        </>
+      )}
+      <div className={`${resultSummaryMode && 'is-hidden'}`}>
+        <img src={chart} />
+      </div>
+      {isOfficial(tags) ? (
+        <p className="subtitle is-7 p-3">Проголосовало менее {quorum * 100}% жильцов</p>
+      ) : null}
+    </section>
+  );
+};
 
 const PollPage = () => {
   const [isAccept, setAccept] = useState(false);
   const { pollId } = useParams();
   const { polls } = useContext(PollsContext);
   const history = useHistory();
-
   const poll = polls.find((x) => x.id.toString() === pollId);
   if (!poll) {
     return <GenericPage />;
@@ -24,17 +142,8 @@ const PollPage = () => {
     setAccept(true);
   };
 
-  const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
-  const isOpen = date.getTime() >= new Date().getTime();
-  const isSuccess = pollData.results.some((x) => x > 50);
-  const isFailed = userAmount * quorum > pollData.results.reduce((ac, cur) => ac + cur);
-
-  let color = isOpen
-    ? 'has-background-warning-light'
-    : !isSuccess
-    ? 'has-background-danger-light'
-    : 'has-background-primary-light';
-
+  const { header, date, author, text, isRadio, tags, pollData, quorum } = poll;
+  const type = getType(poll);
   const { topics } = useContext(TopicsContext);
   const topic = topics.find((topic) => topic.id === pollData?.discussionId);
 
@@ -47,169 +156,78 @@ const PollPage = () => {
   };
 
   return (
-    <GenericPage>
-      {' '}
-      <>
-        <div className={'card mt-2 ' + color}>
-          <div className="card-content">
-            <div className="media mb-2">
-              <div className="media-content">
-                <p className="title is-4 mb-2">{header}</p>
-                <DetailAttribute>
-                  <div className="is-flex is-align-items-center">
-                    {topic && (
-                      <button
-                        className="ml-5 button is-small"
-                        onClick={() => history.push(`/discussions/${topic.id}`)}
-                      >
-                        <span className="mr-2">Перейти к обсуждению</span>
-                        <FontAwesomeIcon icon={faArrowRight} />
-                      </button>
-                    )}
-                    {!topic && (
-                      <span className="ml-5 tag is-light">{'Обсуждение не создавалось'}</span>
-                    )}
-                  </div>
-                </DetailAttribute>
-                <div className="mb-2">
-                  <p className="subtitle is-6">Автор: {author}</p>
-                </div>
-                {tags.map((x, i) => (
-                  <span key={i} className="tag is-info is-light mr-1">
-                    #{x}
-                  </span>
-                ))}
-                <p className="subtitle is-7 mt-2 mb-2">
-                  Дата окончания : {date.toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-            <div className="content">
-              <hr />
-              {text}
-              {tags.includes('официально') ? (
-                <p className="subtitle is-7 mt-2 mb-2">
-                  Для того, чтобы голосование состоялось должны проголосовать {quorum * 100}%
-                  жильцов
-                </p>
-              ) : null}
-            </div>
-            {isOpen ? (
-              <section className="section p-0 has-background-link-light">
-                <div className="panel-heading">
-                  <h3 className="panel-title">Голосование</h3>
-                </div>
-                {isRadio ? (
-                  <>
-                    <div>
-                      <h3 className="panel-title p-4">{pollData.question}</h3>
-                    </div>
-                    <div className="control p-4">
-                      {pollData.items.map((x, i) => (
-                        <label className="radio" key={i}>
-                          <input type="radio" name="answer" disabled={isAccept} />
-                          {x}
-                        </label>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div>
-                      <h3 className="panel-title p-4">{pollData.question}</h3>
-                    </div>
-                    <div className="control p-4">
-                      {pollData.items.map((e, i) => {
-                        return (
-                          <React.Fragment key={i}>
-                            <label className="checkbox mr-2">
-                              <input type="checkbox" className="mr-2" disabled={isAccept} />
-                              {e}
-                            </label>
-                          </React.Fragment>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
-              </section>
-            ) : null}
-            {isOpen ? (
-              <footer className="card-footer">
-                <a className="button mt-2" onClick={onAccept}>
-                  Голосовать
-                </a>
-              </footer>
-            ) : (
-              <>
-                <section className="section p-0 has-background-link-light">
-                  {' '}
-                  {resultSummaryMode && (
-                    <div className="panel-heading">
-                      <h3 className="panel-title">Результаты голосования</h3>
-                    </div>
-                  )}
-                  {!resultSummaryMode && (
-                    <div>
-                      <button className="button" onClick={switchResultMode}>
-                        <FontAwesomeIcon className="icon" size={'xs'} icon={faArrowLeft} />
-                        <span>Основные результаты</span>
-                      </button>
-                    </div>
-                  )}
-                  {resultSummaryMode && (
-                    <>
-                      <div>
-                        <h3 className="panel-title p-4">{pollData.question}</h3>
-                      </div>
-                      <div className="control p-4">
-                        {pollData.items.map((x, i) => (
-                          <h3 className="panel-title" key={i}>
-                            {x}:{' '}
-                            <span className="is-size-5 has-text-weight-medium pl-2">
-                              {pollData.results[i]}
-                            </span>
-                          </h3>
-                        ))}
-                      </div>
-                      <button className="button" onClick={switchResultMode}>
-                        <span>Подробные результаты</span>
-                        <FontAwesomeIcon className="icon" size={'xs'} icon={faArrowRight} />
-                      </button>
-                    </>
-                  )}
-                  <div className={`${resultSummaryMode && 'is-hidden'}`}>
-                    <img src={chart} />
-                  </div>
-                  {tags.includes('официально') ? (
-                    <p className="subtitle is-7 p-3">Проголосовало менее {quorum * 100}% жильцов</p>
-                  ) : null}
-                </section>
-              </>
+    <GenericPage header={header}>
+      <div className={'card'}>
+        <DetailAttribute>
+          <div className="is-flex is-align-items-center">
+            <span className={`tag ${typesData[type].color}`}>{typesData[type].text}</span>
+            {topic && (
+              <button
+                className="ml-5 button is-small"
+                onClick={() => history.push(`/discussions/${topic.id}`)}
+              >
+                <span className="mr-2">Перейти к обсуждению</span>
+                <FontAwesomeIcon icon={faArrowRight} />
+              </button>
             )}
-
-            {isAccept ? (
-              <span className="has-text-weight-medium is-size-4">Ваш голос зачтен!</span>
-            ) : null}
-            {isFailed ? (
-              <footer className="card-footer">
-                <a
-                  style={{ height: 'auto', whiteSpace: 'normal' }}
-                  className="button mt-2"
-                  onClick={() => {
-                    history.push({
-                      pathname: '/polls/new',
-                      state: poll,
-                    });
-                  }}
-                >
-                  Создать голосование повторно
-                </a>
-              </footer>
-            ) : null}
+            {!topic && <span className="ml-5 tag is-light">{'Обсуждение не создавалось'}</span>}
           </div>
+        </DetailAttribute>
+        <DetailAttribute icon={faUser}>{author}</DetailAttribute>
+        <DetailAttribute icon={faCalendar}>{date.toLocaleDateString()}</DetailAttribute>
+        <DetailAttribute icon={faTags}>
+          <Tags tags={tags} />
+        </DetailAttribute>
+        <hr />
+        <DetailAttribute icon={faEnvelopeOpenText}>{text}</DetailAttribute>
+        {isOfficial(tags) && (
+          <DetailAttribute icon={faExclamation}>
+            <div className="subtitle is-7 has-text-info">{`Для того, чтобы голосование состоялось, должны проголосовать ${
+              quorum * 100
+            }% жильцов`}</div>
+          </DetailAttribute>
+        )}
+        <div className="mx-4 my-4">
+          {type === types.OPEN && (
+            <OpenedPoll pollData={pollData} isAccept={isAccept} isRadio={isRadio} />
+          )}
+          {type === types.OPEN ? (
+            <footer className="card-footer">
+              <a className="button mt-2" onClick={onAccept}>
+                Голосовать
+              </a>
+            </footer>
+          ) : (
+            <NotOpenedPoll
+              resultSummaryMode={resultSummaryMode}
+              pollData={pollData}
+              tags={tags}
+              quorum={quorum}
+              switchResultMode={switchResultMode}
+            ></NotOpenedPoll>
+          )}
+
+          {isAccept ? (
+            <span className="has-text-weight-medium is-size-4">Ваш голос зачтен!</span>
+          ) : null}
+          {type === types.FAILED ? (
+            <footer className="card-footer">
+              <a
+                style={{ height: 'auto', whiteSpace: 'normal' }}
+                className="button mt-2"
+                onClick={() => {
+                  history.push({
+                    pathname: '/polls/new',
+                    state: poll,
+                  });
+                }}
+              >
+                Создать голосование повторно
+              </a>
+            </footer>
+          ) : null}
         </div>
-      </>
+      </div>
     </GenericPage>
   );
 };

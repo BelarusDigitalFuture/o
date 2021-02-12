@@ -5,6 +5,7 @@ import CardsListFilter from '../../components/CardsListFilter/CardsListFilter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { isDateFuture } from '../../shared/service';
+import { countVotesSum, isPollCompleted } from '../../shared/state/polls';
 
 const CardsList = ({
   data,
@@ -31,21 +32,25 @@ const CardsList = ({
     );
 
   let cardsSet;
+
   if (isPolls || isEvents) {
     cardsSet = showOpen
       ? data.filter((x) => x.date.getTime() >= new Date().getTime())
       : (cardsSet = isCompleteOpen
           ? data.filter((x) => {
               return isPolls
-                ? x.date.getTime() < new Date().getTime() &&
-                    x.userAmount * x.quorum <= x.pollData.results.reduce((ac, cur) => ac + cur)
-                : x.date.getTime() < new Date().getTime();
+                ? isPollCompleted({
+                    pollData: x.pollData,
+                    quorum: x.quorum,
+                    userAmount: x.userAmount,
+                    date: x.date,
+                  })
+                : !isDateFuture(x.date);
             })
           : (cardsSet = isFailedOpen
               ? data.filter((x) => {
                   return isPolls
-                    ? x.date.getTime() < new Date().getTime() &&
-                        x.userAmount * x.quorum > x.pollData.results.reduce((ac, cur) => ac + cur)
+                    ? !isDateFuture(x.date) && x.userAmount * x.quorum > countVotesSum(x.pollData)
                     : null;
                 })
               : null));
