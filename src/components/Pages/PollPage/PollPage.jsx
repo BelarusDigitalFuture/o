@@ -8,6 +8,7 @@ import { DetailAttribute } from '../../../containers/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { setFlourishScript } from '../../../shared/service';
+import chart from './poll-results.png';
 
 const PollPage = () => {
   const [isAccept, setAccept] = useState(false);
@@ -177,10 +178,9 @@ const PollPage = () => {
                       </button>
                     </>
                   )}
-                  <div
-                    className={`flourish-embed flourish-chart ${resultSummaryMode && 'is-hidden'}`}
-                    data-src="visualisation/5257910"
-                  ></div>
+                  <div className={`${resultSummaryMode && 'is-hidden'}`}>
+                    <img src={chart} />
+                  </div>
                   {tags.includes('официально') ? (
                     <p className="subtitle is-7 p-3">Проголосовало менее {quorum * 100}% жильцов</p>
                   ) : null}
