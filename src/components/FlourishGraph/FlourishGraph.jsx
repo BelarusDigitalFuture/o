@@ -1,4 +1,5 @@
 import React from 'react';
+import './script';
 import { Helmet } from 'react-helmet';
 
 const FlourishGraph = ({ src }) => {
