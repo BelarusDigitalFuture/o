@@ -47,7 +47,7 @@ const EventPage = () => {
           </div>
         </DetailAttribute>
         <DetailAttribute icon={faUser}>{event.author}</DetailAttribute>
-        <DetailAttribute icon={faCalendar}>{event.date.toLocaleString()}</DetailAttribute>
+        <DetailAttribute icon={faCalendar}>{event.date.toLocaleDateString()}</DetailAttribute>
         <DetailAttribute icon={faTags}>
           <Tags tags={event.tags} />
         </DetailAttribute>
