@@ -39,25 +39,26 @@ const getType = (poll) => {
   return types.FAILED;
 };
 
-const RadioChoice = ({ text, disabled }) => {
+const RadioChoice = ({ text, disabled, onSelected }) => {
   return (
     <label className="radio" style={{ width: '100%' }}>
-      <input type="radio" name="answer" disabled={disabled} />
+      <input type="radio" name="answer" disabled={disabled} onChange={onSelected} />
       <span className="ml-2">{text}</span>
     </label>
   );
 };
 
-const CheckboxChoice = ({ text, disabled }) => {
+const CheckboxChoice = ({ text, disabled, onSelected }) => {
   return (
     <label className="checkbox mr-2" style={{ width: '100%' }}>
-      <input type="checkbox" disabled={disabled} />
+      <input type="checkbox" disabled={disabled} onChange={onSelected} />
       <span className="ml-2">{text}</span>
     </label>
   );
 };
 
-const OpenedPoll = ({ pollData, isAccept, isRadio }) => {
+const OpenedPoll = ({ pollData, isAccept, isRadio, isUserVoted, votedChangeHandler }) => {
+  const [selectedChoice, selectChoice] = useState(null);
   return (
     <section className="section p-0 has-background-link-light">
       <div className="panel-heading">
@@ -70,15 +71,34 @@ const OpenedPoll = ({ pollData, isAccept, isRadio }) => {
         {pollData.items.map((item, i) =>
           isRadio ? (
             <a className="panel-block">
-              <RadioChoice text={item} key={i} disabled={isAccept} />
+              <RadioChoice
+                text={item}
+                key={i}
+                disabled={isUserVoted}
+                onSelected={(choice) => selectChoice(choice)}
+              />
             </a>
           ) : (
             <a className="panel-block">
-              <CheckboxChoice text={item} key={i} disabled={isAccept} />
+              <CheckboxChoice
+                text={item}
+                key={i}
+                disabled={isUserVoted}
+                onSelected={(choice) => selectChoice(choice)}
+              />
             </a>
           ),
         )}
       </div>
+      <footer className="card-footer">
+        <button
+          className="button mt-2"
+          onClick={votedChangeHandler}
+          disabled={isUserVoted || !selectedChoice}
+        >
+          Голосовать
+        </button>
+      </footer>
     </section>
   );
 };
@@ -130,19 +150,23 @@ const NotOpenedPoll = ({ resultSummaryMode, pollData, quorum, tags, switchResult
 };
 
 const PollPage = () => {
-  const [isAccept, setAccept] = useState(false);
   const { pollId } = useParams();
-  const { polls } = useContext(PollsContext);
+  const { polls, dispatch } = useContext(PollsContext);
   const history = useHistory();
   const poll = polls.find((x) => x.id.toString() === pollId);
   if (!poll) {
     return <GenericPage />;
   }
-  const onAccept = () => {
-    setAccept(true);
+  const { header, date, author, text, isRadio, tags, pollData, quorum, isUserVoted, id } = poll;
+
+  const votedChangeHandler = () => {
+    if (isUserVoted) {
+      return;
+    } else {
+      dispatch({ type: 'CHECK_USER_VOTED', payload: id });
+    }
   };
 
-  const { header, date, author, text, isRadio, tags, pollData, quorum } = poll;
   const type = getType(poll);
   const { topics } = useContext(TopicsContext);
   const topic = topics.find((topic) => topic.id === pollData?.discussionId);
@@ -187,16 +211,14 @@ const PollPage = () => {
             }% жильцов`}</div>
           </DetailAttribute>
         )}
-        <div className="mx-4 my-4">
-          {type === types.OPEN && (
-            <OpenedPoll pollData={pollData} isAccept={isAccept} isRadio={isRadio} />
-          )}
+        <div className="mx-4 my-4 py-4">
           {type === types.OPEN ? (
-            <footer className="card-footer">
-              <a className="button mt-2" onClick={onAccept}>
-                Голосовать
-              </a>
-            </footer>
+            <OpenedPoll
+              pollData={pollData}
+              isRadio={isRadio}
+              isUserVoted={isUserVoted}
+              votedChangeHandler={votedChangeHandler}
+            />
           ) : (
             <NotOpenedPoll
               resultSummaryMode={resultSummaryMode}
@@ -207,7 +229,7 @@ const PollPage = () => {
             ></NotOpenedPoll>
           )}
 
-          {isAccept ? (
+          {isUserVoted ? (
             <span className="has-text-weight-medium is-size-4">Ваш голос зачтен!</span>
           ) : null}
           {type === types.FAILED ? (
