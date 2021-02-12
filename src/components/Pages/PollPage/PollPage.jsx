@@ -11,20 +11,35 @@ import { setFlourishScript } from '../../../shared/service';
 import chart from './poll-results.png';
 
 const PollPage = () => {
-  const [isAccept, setAccept] = useState(false);
   const { pollId } = useParams();
-  const { polls } = useContext(PollsContext);
+  const { polls, dispatch } = useContext(PollsContext);
   const history = useHistory();
 
   const poll = polls.find((x) => x.id.toString() === pollId);
   if (!poll) {
     return <GenericPage />;
   }
-  const onAccept = () => {
-    setAccept(true);
+  const votedChangeHandler = () => {
+    if (isUserVoted) {
+      return;
+    } else {
+      dispatch({ type: 'CHECK_USER_VOTED', payload: id });
+    }
   };
 
-  const { header, date, author, text, isRadio, tags, pollData, userAmount, quorum } = poll;
+  const {
+    header,
+    date,
+    author,
+    text,
+    isRadio,
+    tags,
+    pollData,
+    id,
+    userAmount,
+    quorum,
+    isUserVoted,
+  } = poll;
   const isOpen = date.getTime() >= new Date().getTime();
   const isSuccess = pollData.results.some((x) => x > 50);
   const isFailed = userAmount * quorum > pollData.results.reduce((ac, cur) => ac + cur);
@@ -107,7 +122,7 @@ const PollPage = () => {
                     <div className="control p-4">
                       {pollData.items.map((x, i) => (
                         <label className="radio" key={i}>
-                          <input type="radio" name="answer" disabled={isAccept} />
+                          <input type="radio" name="answer" disabled={isUserVoted} />
                           {x}
                         </label>
                       ))}
@@ -123,7 +138,7 @@ const PollPage = () => {
                         return (
                           <React.Fragment key={i}>
                             <label className="checkbox mr-2">
-                              <input type="checkbox" className="mr-2" disabled={isAccept} />
+                              <input type="checkbox" className="mr-2" disabled={isUserVoted} />
                               {e}
                             </label>
                           </React.Fragment>
@@ -136,7 +151,7 @@ const PollPage = () => {
             ) : null}
             {isOpen ? (
               <footer className="card-footer">
-                <a className="button mt-2" onClick={onAccept}>
+                <a className="button mt-2" onClick={votedChangeHandler} disabled={isUserVoted}>
                   Голосовать
                 </a>
               </footer>
@@ -188,7 +203,7 @@ const PollPage = () => {
               </>
             )}
 
-            {isAccept ? (
+            {isUserVoted ? (
               <span className="has-text-weight-medium is-size-4">Ваш голос зачтен!</span>
             ) : null}
             {isFailed ? (
